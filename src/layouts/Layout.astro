@@ -1,0 +1,109 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Mediterranean Power Plan - High-Protein Recipe Guide & Exercise Plan for Active Adults" } = Astro.props;
+
+// Import global styles
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    
+    <!-- Print styles -->
+    <style>
+      @media print {
+        /* Hide navigation and non-essential elements when printing */
+        .no-print, nav, header.no-print {
+          display: none !important;
+        }
+        
+        /* Optimize page breaks */
+        .page-break-before {
+          page-break-before: always;
+        }
+        
+        .page-break-avoid {
+          page-break-inside: avoid;
+        }
+        
+        /* Recipe cards print optimization */
+        .recipe-card {
+          page-break-inside: avoid;
+          margin-bottom: 20px;
+        }
+        
+        /* Ensure ingredients and instructions stay together */
+        .ingredients-list, .instructions-list {
+          page-break-inside: avoid;
+        }
+        
+        /* Shopping list optimization */
+        .shopping-section {
+          page-break-inside: avoid;
+          margin-bottom: 20px;
+        }
+        
+        /* Exercise plan optimization */
+        .exercise-day {
+          page-break-inside: avoid;
+          margin-bottom: 15px;
+        }
+        
+        /* Calendar optimization */
+        .meal-calendar {
+          page-break-inside: avoid;
+        }
+        
+        /* Font size adjustments for print */
+        body {
+          font-size: 11pt;
+          line-height: 1.4;
+        }
+        
+        h1 { font-size: 18pt; }
+        h2 { font-size: 16pt; }
+        h3 { font-size: 14pt; }
+        h4 { font-size: 12pt; }
+        
+        /* Remove background colors and shadows for print */
+        * {
+          background: white !important;
+          box-shadow: none !important;
+          text-shadow: none !important;
+        }
+        
+        /* Ensure text is black for better readability */
+        * {
+          color: black !important;
+        }
+        
+        /* Keep borders for structure */
+        .border, .border-b, .border-t, .border-l, .border-r {
+          border-color: #333 !important;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-amber-50 text-slate-800 font-serif">
+    <slot />
+    
+    <!-- Print button - hidden during print -->
+    <button
+      onclick="window.print()"
+      class="no-print fixed bottom-6 right-6 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg shadow-lg transition-colors duration-200 font-sans"
+    >
+      🖨️ Print Page
+    </button>
+  </body>
+</html>

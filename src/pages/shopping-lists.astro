@@ -1,0 +1,435 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+---
+
+<Layout title="Mediterranean Power Plan - Shopping Lists">
+  <Navigation />
+  
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <header class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-emerald-700 mb-4">Shopping Lists</h1>
+      <p class="text-lg text-slate-600 font-sans max-w-3xl mx-auto">
+        Complete grocery lists organized by week and category. Print these lists for easy shopping!
+      </p>
+    </header>
+
+    <!-- Week 1 Shopping List -->
+    <section class="shopping-section page-break-avoid bg-white rounded-xl shadow-md p-6 mb-8">
+      <h2 class="text-3xl font-bold text-emerald-700 mb-6 border-b-2 border-emerald-200 pb-2">
+        🛒 Week 1 Shopping List
+      </h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Proteins -->
+        <div class="shopping-category">
+          <h3 class="text-xl font-semibold text-emerald-600 mb-4 bg-emerald-50 p-3 rounded-lg">🥩 Proteins</h3>
+          <ul class="space-y-2 font-sans">
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>3 lbs chicken thighs (bone-in, skin-on)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>2 lbs salmon fillets</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>2 lbs lean beef stew meat</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>2 dozen eggs</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>2 large containers Greek yogurt (32 oz each)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>1 lb feta cheese</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>8 oz cottage cheese</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pantry Staples -->
+        <div class="shopping-category">
+          <h3 class="text-xl font-semibold text-emerald-600 mb-4 bg-emerald-50 p-3 rounded-lg">🏺 Pantry Staples</h3>
+          <ul class="space-y-2 font-sans">
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Extra virgin olive oil (500ml)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Quinoa (2 lbs)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Brown rice (2 lbs)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Dried red lentils (1 lb)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Canned chickpeas (4 cans)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Tahini (1 jar)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Za'atar spice blend</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Dukkah spice blend</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Fresh Produce -->
+        <div class="shopping-category">
+          <h3 class="text-xl font-semibold text-emerald-600 mb-4 bg-emerald-50 p-3 rounded-lg">🥬 Fresh Produce</h3>
+          <ul class="space-y-2 font-sans">
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Mixed vegetables for roasting (3 lbs)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Fresh spinach (2 bunches)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Cherry tomatoes (2 lbs)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Cucumbers (4 large)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Red bell peppers (4)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Red onions (3 large)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Lemons (8)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Garlic (2 heads)</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Herbs & Seasonings -->
+        <div class="shopping-category">
+          <h3 class="text-xl font-semibold text-emerald-600 mb-4 bg-emerald-50 p-3 rounded-lg">🌿 Herbs & Seasonings</h3>
+          <ul class="space-y-2 font-sans">
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Fresh parsley (2 bunches)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Fresh mint (1 bunch)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Fresh basil (1 bunch)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Dried oregano</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Ground cumin</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Sweet paprika</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Ground sumac</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Ground cinnamon</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Week 2 Shopping List -->
+    <section class="shopping-section page-break-before bg-white rounded-xl shadow-md p-6 mb-8">
+      <h2 class="text-3xl font-bold text-emerald-700 mb-6 border-b-2 border-emerald-200 pb-2">
+        🛒 Week 2 Shopping List
+      </h2>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Proteins -->
+        <div class="shopping-category">
+          <h3 class="text-xl font-semibold text-emerald-600 mb-4 bg-emerald-50 p-3 rounded-lg">🥩 Proteins</h3>
+          <ul class="space-y-2 font-sans">
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>2 lbs ground lamb</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>2 lbs different fish (halibut, sea bass)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>2 lbs turkey breast</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>2 dozen eggs (replenish)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Greek yogurt (replenish - 2 containers)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Additional feta (8 oz)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Ricotta cheese (1 container)</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Fresh Additions -->
+        <div class="shopping-category">
+          <h3 class="text-xl font-semibold text-emerald-600 mb-4 bg-emerald-50 p-3 rounded-lg">🥒 Fresh Additions</h3>
+          <ul class="space-y-2 font-sans">
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Eggplant (2 medium)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Zucchini (4 medium)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Bell peppers (6 mixed colors)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Artichoke hearts (2 jars)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Sun-dried tomatoes (1 jar)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Kalamata olives (1 jar)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Capers (1 jar)</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Fresh Herbs -->
+        <div class="shopping-category">
+          <h3 class="text-xl font-semibold text-emerald-600 mb-4 bg-emerald-50 p-3 rounded-lg">🌱 Fresh Herbs</h3>
+          <ul class="space-y-2 font-sans">
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Fresh dill (2 bunches)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Fresh oregano (1 bunch)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Fresh thyme (1 bunch)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Fresh cilantro (1 bunch)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Green onions/scallions (2 bunches)</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Pantry Additions -->
+        <div class="shopping-category">
+          <h3 class="text-xl font-semibold text-emerald-600 mb-4 bg-emerald-50 p-3 rounded-lg">🏺 Pantry Additions</h3>
+          <ul class="space-y-2 font-sans">
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Whole wheat pita bread</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Lavash bread</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Pine nuts (small bag)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Mixed olives</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Harissa paste</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Red wine vinegar</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Pomegranate molasses</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Protein-Rich Snacks -->
+    <section class="shopping-section page-break-avoid bg-emerald-50 rounded-xl p-6 border border-emerald-200">
+      <h2 class="text-3xl font-bold text-emerald-700 mb-6 border-b-2 border-emerald-200 pb-2">
+        🥜 Protein-Rich Snack Essentials
+      </h2>
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- High-Protein Snacks -->
+        <div class="shopping-category">
+          <h3 class="text-xl font-semibold text-emerald-600 mb-4">💪 High-Protein Snacks</h3>
+          <ul class="space-y-2 font-sans">
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Mixed nuts (almonds, walnuts, pistachios)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Hummus (or ingredients to make fresh)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>String cheese or cheese sticks</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Protein powder (optional)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Nut butter (almond or natural peanut)</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Portable Options -->
+        <div class="shopping-category">
+          <h3 class="text-xl font-semibold text-emerald-600 mb-4">🎒 Portable Options</h3>
+          <ul class="space-y-2 font-sans">
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Individual Greek yogurt cups</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Hard-boiled eggs (pre-made)</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Roasted chickpeas</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Whole grain crackers</span>
+            </li>
+            <li class="flex items-center">
+              <input type="checkbox" class="mr-3 text-emerald-600 no-print" />
+              <span>Jerky (turkey or beef)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Protein Targets -->
+      <div class="mt-6 bg-white rounded-lg p-4 shadow-sm">
+        <h4 class="text-lg font-semibold text-emerald-600 mb-3">🎯 Daily Protein Targets</h4>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm font-sans">
+          <div class="text-center">
+            <div class="font-bold text-emerald-600">15g</div>
+            <div class="text-slate-600">Greek yogurt + almonds</div>
+          </div>
+          <div class="text-center">
+            <div class="font-bold text-emerald-600">12g</div>
+            <div class="text-slate-600">2 hard-boiled eggs</div>
+          </div>
+          <div class="text-center">
+            <div class="font-bold text-emerald-600">14g</div>
+            <div class="text-slate-600">Cottage cheese + cucumber</div>
+          </div>
+          <div class="text-center">
+            <div class="font-bold text-emerald-600">8g</div>
+            <div class="text-slate-600">Hummus + vegetables + pita</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shopping Tips -->
+    <section class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-2xl font-bold text-emerald-700 mb-4">💡 Smart Shopping Tips</h2>
+      <div class="grid md:grid-cols-2 gap-6 font-sans">
+        <div>
+          <h3 class="text-lg font-semibold text-emerald-600 mb-3">🛒 Shopping Strategy</h3>
+          <ul class="space-y-2 text-slate-700">
+            <li class="flex items-start"><span class="text-emerald-500 mr-2">•</span>Shop for Week 1 on Sunday</li>
+            <li class="flex items-start"><span class="text-emerald-500 mr-2">•</span>Mid-week fresh produce run (Wednesday)</li>
+            <li class="flex items-start"><span class="text-emerald-500 mr-2">•</span>Buy proteins in bulk when on sale</li>
+            <li class="flex items-start"><span class="text-emerald-500 mr-2">•</span>Check freezer space before shopping</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold text-emerald-600 mb-3">💰 Budget Tips</h3>
+          <ul class="space-y-2 text-slate-700">
+            <li class="flex items-start"><span class="text-emerald-500 mr-2">•</span>Buy herbs in larger quantities and freeze</li>
+            <li class="flex items-start"><span class="text-emerald-500 mr-2">•</span>Purchase Greek yogurt in large containers</li>
+            <li class="flex items-start"><span class="text-emerald-500 mr-2">•</span>Buy seasonal vegetables when cheaper</li>
+            <li class="flex items-start"><span class="text-emerald-500 mr-2">•</span>Consider frozen fish and vegetables</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Print note -->
+    <div class="mt-8 text-center text-slate-600 font-sans">
+      <p class="text-sm">🖨️ Print these shopping lists for easy grocery trips - checkboxes included!</p>
+    </div>
+  </main>
+</Layout>

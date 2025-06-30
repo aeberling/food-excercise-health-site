@@ -1,0 +1,322 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+---
+
+<Layout title="Mediterranean Power Plan - 2-Week Meal Plan">
+  <Navigation />
+  
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <header class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-emerald-700 mb-4">2-Week Mediterranean Meal Plan</h1>
+      <p class="text-lg text-slate-600 font-sans max-w-3xl mx-auto">
+        Complete meal calendar optimized for high protein content (25-40g per serving) to support your active lifestyle.
+        Click meal names to jump to detailed recipes.
+      </p>
+    </header>
+
+    <!-- Week Navigation -->
+    <div class="flex justify-center mb-8 no-print">
+      <div class="bg-white rounded-lg shadow-md p-2 border border-emerald-200">
+        <button id="week1-btn" class="tab-button active px-6 py-2 rounded-md font-medium transition-colors">Week 1</button>
+        <button id="week2-btn" class="tab-button px-6 py-2 rounded-md font-medium transition-colors">Week 2</button>
+      </div>
+    </div>
+
+    <!-- Week 1 -->
+    <section id="week1" class="week-tab meal-calendar">
+      <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-emerald-700 mb-6 text-center">Week 1: Foundation Week</h2>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-lg">
+            <thead>
+              <tr class="bg-emerald-600 text-white">
+                <th class="border border-emerald-500 px-4 py-3 font-bold text-left">Day</th>
+                <th class="border border-emerald-500 px-4 py-3 font-bold text-left">Breakfast</th>
+                <th class="border border-emerald-500 px-4 py-3 font-bold text-left">Lunch</th>
+                <th class="border border-emerald-500 px-4 py-3 font-bold text-left">Dinner</th>
+                <th class="border border-emerald-500 px-4 py-3 font-bold text-center">Daily Protein</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b hover:bg-emerald-50">
+                <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Monday</td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#greek-yogurt-power-bowl" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Greek Yogurt Power Bowl</a>
+                  <br><small class="text-slate-500">(30g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#air-fryer-chicken" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Leftover Air Fryer Chicken</a> with Quinoa
+                  <br><small class="text-slate-500">(35g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#sheet-pan-salmon" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Sheet Pan Salmon</a> with Roasted Vegetables
+                  <br><small class="text-slate-500">(34g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 text-center font-bold text-emerald-600">99g + snacks</td>
+              </tr>
+              
+              <tr class="border-b hover:bg-emerald-50">
+                <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Tuesday</td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#mediterranean-egg-muffins" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Mediterranean Egg Muffins x3</a>
+                  <br><small class="text-slate-500">(36g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#greek-chicken-grain-bowl" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Greek Chicken Grain Bowl</a>
+                  <br><small class="text-slate-500">(30g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#instant-pot-beef-stew" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Instant Pot Beef Stew</a> over Quinoa
+                  <br><small class="text-slate-500">(35g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 text-center font-bold text-emerald-600">101g + snacks</td>
+              </tr>
+              
+              <tr class="border-b hover:bg-emerald-50">
+                <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Wednesday</td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#shakshuka" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Shakshuka with Greek Yogurt</a>
+                  <br><small class="text-slate-500">(25g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#mediterranean-tuna-wrap" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Mediterranean Tuna Salad Wrap</a>
+                  <br><small class="text-slate-500">(28g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#slow-cooker-chicken-orzo" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Slow Cooker Chicken with Orzo</a>
+                  <br><small class="text-slate-500">(28g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 text-center font-bold text-emerald-600">81g + snacks</td>
+              </tr>
+              
+              <tr class="border-b hover:bg-emerald-50">
+                <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Thursday</td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#savory-quinoa-bowl" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Savory Quinoa Bowl with Eggs</a>
+                  <br><small class="text-slate-500">(22g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  Leftover Beef Stew
+                  <br><small class="text-slate-500">(35g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#air-fryer-souvlaki" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Air Fryer Greek Chicken Souvlaki</a>
+                  <br><small class="text-slate-500">(28g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 text-center font-bold text-emerald-600">85g + snacks</td>
+              </tr>
+              
+              <tr class="border-b hover:bg-emerald-50">
+                <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Friday</td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#greek-scrambled-eggs" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Greek Scrambled Eggs with Feta</a>
+                  <br><small class="text-slate-500">(25g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#chickpea-power-bowl" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Mediterranean Chickpea Power Bowl</a>
+                  <br><small class="text-slate-500">(20g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#sheet-pan-fish" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Sheet Pan Mediterranean Fish</a>
+                  <br><small class="text-slate-500">(30g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 text-center font-bold text-emerald-600">75g + snacks</td>
+              </tr>
+              
+              <tr>
+                <td class="border border-slate-200 px-4 py-3 font-semibold bg-amber-50 text-amber-700">Weekend</td>
+                <td colspan="4" class="border border-slate-200 px-4 py-3 bg-amber-50 font-sans">
+                  <strong>Batch Cooking Days:</strong> Saturday - Smoked Mediterranean Chicken prep day | Sunday - Meal prep for Week 2
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Week 2 -->
+    <section id="week2" class="week-tab meal-calendar hidden">
+      <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-emerald-700 mb-6 text-center">Week 2: Expansion Week</h2>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-lg">
+            <thead>
+              <tr class="bg-emerald-600 text-white">
+                <th class="border border-emerald-500 px-4 py-3 font-bold text-left">Day</th>
+                <th class="border border-emerald-500 px-4 py-3 font-bold text-left">Breakfast</th>
+                <th class="border border-emerald-500 px-4 py-3 font-bold text-left">Lunch</th>
+                <th class="border border-emerald-500 px-4 py-3 font-bold text-left">Dinner</th>
+                <th class="border border-emerald-500 px-4 py-3 font-bold text-center">Daily Protein</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b hover:bg-emerald-50">
+                <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Monday</td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#mediterranean-frittata" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Mediterranean Frittata Slice</a>
+                  <br><small class="text-slate-500">(20g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#greek-lamb-burger" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Greek Lamb Burger</a> with Side Salad
+                  <br><small class="text-slate-500">(30g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#instant-pot-lentil-soup" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Instant Pot Lentil Soup</a> with Grilled Chicken
+                  <br><small class="text-slate-500">(40g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 text-center font-bold text-emerald-600">90g + snacks</td>
+              </tr>
+              
+              <tr class="border-b hover:bg-emerald-50">
+                <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Tuesday</td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#savory-yogurt-bowl" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Savory Greek Yogurt Bowl</a>
+                  <br><small class="text-slate-500">(40g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  Leftover Lentil Soup
+                  <br><small class="text-slate-500">(18g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#air-fryer-salmon" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Air Fryer Salmon</a> with Quinoa Tabbouleh
+                  <br><small class="text-slate-500">(38g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 text-center font-bold text-emerald-600">96g + snacks</td>
+              </tr>
+              
+              <tr class="border-b hover:bg-emerald-50">
+                <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Wednesday</td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#shakshuka" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Power Shakshuka</a>
+                  <br><small class="text-slate-500">(25g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#mediterranean-chicken-wrap" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Mediterranean Chicken Wrap</a>
+                  <br><small class="text-slate-500">(30g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#greek-sheet-pan-chicken" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Greek-Style Sheet Pan Chicken</a>
+                  <br><small class="text-slate-500">(32g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 text-center font-bold text-emerald-600">87g + snacks</td>
+              </tr>
+              
+              <tr class="border-b hover:bg-emerald-50">
+                <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Thursday</td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#mediterranean-egg-muffins" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Mediterranean Egg Muffins x3</a>
+                  <br><small class="text-slate-500">(36g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#chickpea-tuna-salad" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Chickpea & Tuna Salad</a>
+                  <br><small class="text-slate-500">(25g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#slow-cooker-beef" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Slow Cooker Mediterranean Beef</a>
+                  <br><small class="text-slate-500">(26g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 text-center font-bold text-emerald-600">87g + snacks</td>
+              </tr>
+              
+              <tr class="border-b hover:bg-emerald-50">
+                <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Friday</td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#greek-scrambled-eggs" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Greek Scrambled Eggs with Spinach</a>
+                  <br><small class="text-slate-500">(25g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  Leftover Mediterranean Beef
+                  <br><small class="text-slate-500">(26g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 font-sans">
+                  <a href="/recipes#grilled-fish-vegetables" class="text-emerald-600 hover:text-emerald-700 underline font-medium">Grilled Fish with Roasted Vegetables</a>
+                  <br><small class="text-slate-500">(30g protein)</small>
+                </td>
+                <td class="border border-slate-200 px-4 py-3 text-center font-bold text-emerald-600">81g + snacks</td>
+              </tr>
+              
+              <tr>
+                <td class="border border-slate-200 px-4 py-3 font-semibold bg-amber-50 text-amber-700">Weekend</td>
+                <td colspan="4" class="border border-slate-200 px-4 py-3 bg-amber-50 font-sans">
+                  <strong>Mediterranean Feast Weekend:</strong> Saturday - Mediterranean feast day with family | Sunday - Prep for next week's rotation
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Protein Snack Recommendations -->
+    <section class="bg-emerald-50 rounded-xl p-6 border border-emerald-200">
+      <h2 class="text-2xl font-bold text-emerald-700 mb-4 text-center">High-Protein Snack Options</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+          <div class="text-lg font-bold text-emerald-600">15g</div>
+          <div class="text-sm text-slate-600 font-sans">Greek yogurt + almonds</div>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+          <div class="text-lg font-bold text-emerald-600">12g</div>
+          <div class="text-sm text-slate-600 font-sans">2 hard-boiled eggs</div>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+          <div class="text-lg font-bold text-emerald-600">14g</div>
+          <div class="text-sm text-slate-600 font-sans">Cottage cheese + cucumber</div>
+        </div>
+        <div class="bg-white rounded-lg p-4 shadow-sm">
+          <div class="text-lg font-bold text-emerald-600">8g</div>
+          <div class="text-sm text-slate-600 font-sans">Hummus + vegetables + pita</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Print note -->
+    <div class="mt-8 text-center text-slate-600 font-sans">
+      <p class="text-sm">🖨️ This meal plan is optimized for printing - perfect for posting on your fridge!</p>
+    </div>
+  </main>
+
+  <script>
+    // Week tab functionality
+    const week1Btn = document.getElementById('week1-btn');
+    const week2Btn = document.getElementById('week2-btn');
+    const week1Tab = document.getElementById('week1');
+    const week2Tab = document.getElementById('week2');
+
+    function showWeek1() {
+      week1Btn?.classList.add('active');
+      week2Btn?.classList.remove('active');
+      week1Tab?.classList.remove('hidden');
+      week2Tab?.classList.add('hidden');
+    }
+
+    function showWeek2() {
+      week2Btn?.classList.add('active');
+      week1Btn?.classList.remove('active');
+      week2Tab?.classList.remove('hidden');
+      week1Tab?.classList.add('hidden');
+    }
+
+    week1Btn?.addEventListener('click', showWeek1);
+    week2Btn?.addEventListener('click', showWeek2);
+  </script>
+
+  <style>
+    .tab-button {
+      @apply text-slate-600;
+    }
+    .tab-button.active {
+      @apply bg-emerald-600 text-white;
+    }
+    .tab-button:hover {
+      @apply bg-emerald-100 text-emerald-700;
+    }
+    .tab-button.active:hover {
+      @apply bg-emerald-700 text-white;
+    }
+  </style>
+</Layout>

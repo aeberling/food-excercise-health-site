@@ -1,0 +1,99 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  protein: string;
+  prepTime?: string;
+  cookTime?: string;
+  serves?: string;
+  referenceLink?: string;
+  referenceName?: string;
+  ingredients: string[];
+  instructions: string[];
+  tips?: string[];
+}
+
+const { 
+  id, 
+  title, 
+  protein, 
+  prepTime, 
+  cookTime, 
+  serves, 
+  referenceLink, 
+  referenceName, 
+  ingredients, 
+  instructions, 
+  tips 
+} = Astro.props;
+---
+
+<div id={id} class="recipe-card page-break-avoid bg-white rounded-lg shadow-md p-6 mb-8 border border-emerald-100">
+  <div class="mb-4">
+    <h3 class="text-2xl font-bold text-emerald-700 mb-2">{title}</h3>
+    <div class="flex flex-wrap items-center gap-4 text-sm text-slate-600 font-sans">
+      <span class="bg-emerald-600 text-white px-3 py-1 rounded-full font-medium">{protein} Protein</span>
+      {prepTime && <span><strong>Prep:</strong> {prepTime}</span>}
+      {cookTime && <span><strong>Cook:</strong> {cookTime}</span>}
+      {serves && <span><strong>Serves:</strong> {serves}</span>}
+    </div>
+    {referenceLink && referenceName && (
+      <p class="mt-2 text-sm font-sans">
+        <strong>Reference:</strong> 
+        <a href={referenceLink} target="_blank" class="text-emerald-600 hover:text-emerald-700 underline no-print">
+          {referenceName}
+        </a>
+        <span class="hidden print:inline">{referenceName}</span>
+      </p>
+    )}
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <!-- Ingredients -->
+    <div class="ingredients-list">
+      <h4 class="text-lg font-semibold text-emerald-600 mb-3">Ingredients</h4>
+      <div class="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
+        <ul class="space-y-1">
+          {ingredients.map(ingredient => (
+            <li class="flex items-start text-slate-700 font-sans">
+              <span class="text-emerald-500 mr-2 mt-1">•</span>
+              <span>{ingredient}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions-list">
+      <h4 class="text-lg font-semibold text-emerald-600 mb-3">Instructions</h4>
+      <div class="bg-slate-50 rounded-lg p-4 border border-slate-200">
+        <ol class="space-y-2">
+          {instructions.map((instruction, index) => (
+            <li class="flex items-start text-slate-700 font-sans">
+              <span class="bg-emerald-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-medium mr-3 mt-0.5 flex-shrink-0">
+                {index + 1}
+              </span>
+              <span>{instruction}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tips (if provided) -->
+  {tips && tips.length > 0 && (
+    <div class="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
+      <h4 class="text-lg font-semibold text-amber-700 mb-2">💡 Pro Tips</h4>
+      <ul class="space-y-1">
+        {tips.map(tip => (
+          <li class="flex items-start text-amber-800 font-sans">
+            <span class="text-amber-500 mr-2 mt-1">•</span>
+            <span>{tip}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+</div>

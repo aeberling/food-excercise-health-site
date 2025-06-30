@@ -1,0 +1,394 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+---
+
+<Layout title="Mediterranean Power Plan - Exercise Plan">
+  <Navigation />
+  
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <header class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-emerald-700 mb-4">1-Week Exercise Plan</h1>
+      <p class="text-lg text-slate-600 font-sans max-w-3xl mx-auto">
+        Enhanced workout schedule that incorporates your current activities while adding strategic strength training for optimal results.
+        Designed to complement your badminton, taekwondo, and running routine.
+      </p>
+    </header>
+
+    <!-- Weekly Schedule Overview -->
+    <section class="exercise-day page-break-avoid bg-white rounded-xl shadow-md p-6 mb-8">
+      <h2 class="text-3xl font-bold text-emerald-700 mb-6 border-b-2 border-emerald-200 pb-2">
+        📅 Complete Weekly Schedule
+      </h2>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse bg-white rounded-lg overflow-hidden shadow-lg">
+          <thead>
+            <tr class="bg-emerald-600 text-white">
+              <th class="border border-emerald-500 px-4 py-3 font-bold text-left">Day</th>
+              <th class="border border-emerald-500 px-4 py-3 font-bold text-left">Primary Activity</th>
+              <th class="border border-emerald-500 px-4 py-3 font-bold text-center">Duration</th>
+              <th class="border border-emerald-500 px-4 py-3 font-bold text-center">Intensity</th>
+              <th class="border border-emerald-500 px-4 py-3 font-bold text-left">Focus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b hover:bg-emerald-50">
+              <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Sunday</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Badminton + Upper Body Weights</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">4 hours + 45 min</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">Moderate-High</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Cardio + Strength</td>
+            </tr>
+            <tr class="border-b hover:bg-emerald-50">
+              <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Monday</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Lower Body Strength Training</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">60 minutes</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">High</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Leg Strength + Core</td>
+            </tr>
+            <tr class="border-b hover:bg-emerald-50">
+              <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Tuesday</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Taekwondo Workout + Running</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">45 min + 30 min</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">Moderate-High</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Martial Arts + Cardio</td>
+            </tr>
+            <tr class="border-b hover:bg-emerald-50">
+              <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Wednesday</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Badminton + Core Work</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">4 hours + 20 min</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">Moderate-High</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Cardio + Core Strength</td>
+            </tr>
+            <tr class="border-b hover:bg-emerald-50">
+              <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Thursday</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Upper Body Strength + Taekwondo</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">45 min + 30 min</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">High</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Push/Pull + Flexibility</td>
+            </tr>
+            <tr class="border-b hover:bg-emerald-50">
+              <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Friday</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Active Recovery or Rest</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">30-45 minutes</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">Low</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Flexibility + Mobility</td>
+            </tr>
+            <tr>
+              <td class="border border-slate-200 px-4 py-3 font-semibold bg-emerald-50 text-emerald-700">Saturday</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Long Run + Full Body Circuit</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">60 min + 30 min</td>
+              <td class="border border-slate-200 px-4 py-3 text-center font-sans">Moderate-High</td>
+              <td class="border border-slate-200 px-4 py-3 font-sans">Endurance + Strength</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Detailed Workouts -->
+    <section class="grid gap-8">
+      
+      <!-- Monday: Lower Body -->
+      <div class="exercise-day page-break-avoid bg-white rounded-xl shadow-md p-6">
+        <h2 class="text-2xl font-bold text-emerald-700 mb-4">💪 Monday: Lower Body Strength Training (60 minutes)</h2>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Warm-up -->
+          <div class="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 class="text-lg font-semibold text-amber-700 mb-3">🔥 Warm-up (10 minutes)</h3>
+            <ol class="space-y-2 text-amber-800 font-sans text-sm">
+              <li><strong>1.</strong> 5 minutes treadmill or stationary bike</li>
+              <li><strong>2.</strong> Dynamic leg swings and hip circles</li>
+              <li><strong>3.</strong> Bodyweight squats and lunges</li>
+            </ol>
+          </div>
+          
+          <!-- Main Workout -->
+          <div class="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
+            <h3 class="text-lg font-semibold text-emerald-700 mb-3">💥 Main Workout (40 minutes)</h3>
+            <ol class="space-y-2 text-emerald-800 font-sans text-sm">
+              <li><strong>Leg Press:</strong> 4 sets × 12-15 reps</li>
+              <li><strong>Leg Curls (Hamstring):</strong> 3 sets × 12-15 reps</li>
+              <li><strong>Leg Extensions (Quadriceps):</strong> 3 sets × 12-15 reps</li>
+              <li><strong>Calf Raises:</strong> 4 sets × 15-20 reps</li>
+              <li><strong>Hip Abduction Machine:</strong> 3 sets × 15 reps</li>
+              <li><strong>Glute Bridge (Bodyweight):</strong> 3 sets × 20 reps</li>
+            </ol>
+          </div>
+          
+          <!-- Cool-down -->
+          <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 class="text-lg font-semibold text-blue-700 mb-3">🧘 Core & Cool-down (10 minutes)</h3>
+            <ol class="space-y-2 text-blue-800 font-sans text-sm">
+              <li><strong>1.</strong> Plank variations: 3 sets × 45 seconds</li>
+              <li><strong>2.</strong> Leg stretching routine</li>
+              <li><strong>3.</strong> Hip flexor and calf stretches</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tuesday: Taekwondo + Running -->
+      <div class="exercise-day page-break-avoid bg-white rounded-xl shadow-md p-6">
+        <h2 class="text-2xl font-bold text-emerald-700 mb-4">🥋 Tuesday: Taekwondo Power Session + Interval Run</h2>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Taekwondo Session -->
+          <div>
+            <h3 class="text-xl font-semibold text-emerald-600 mb-4">Taekwondo Session (45 minutes)</h3>
+            
+            <div class="space-y-4">
+              <div class="bg-amber-50 rounded-lg p-4 border border-amber-200">
+                <h4 class="font-semibold text-amber-700 mb-2">Warm-up (10 minutes)</h4>
+                <ul class="space-y-1 text-amber-800 font-sans text-sm">
+                  <li>• Joint rotations (ankles, knees, hips, shoulders)</li>
+                  <li>• Dynamic leg swings (front/back, side to side)</li>
+                  <li>• Light shadow boxing and kicks</li>
+                </ul>
+              </div>
+              
+              <div class="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
+                <h4 class="font-semibold text-emerald-700 mb-2">Technique Practice (20 minutes)</h4>
+                <ul class="space-y-1 text-emerald-800 font-sans text-sm">
+                  <li>• <strong>Basic kicks:</strong> Front kick, roundhouse, side kick (5 min each leg)</li>
+                  <li>• <strong>Combinations:</strong> Jab-cross-roundhouse kick sequences</li>
+                  <li>• <strong>Footwork drills:</strong> Forward/backward, lateral movement</li>
+                  <li>• <strong>Form practice:</strong> Choose 1-2 forms to perfect</li>
+                </ul>
+              </div>
+              
+              <div class="bg-red-50 rounded-lg p-4 border border-red-200">
+                <h4 class="font-semibold text-red-700 mb-2">Power & Conditioning (10 minutes)</h4>
+                <ul class="space-y-1 text-red-800 font-sans text-sm">
+                  <li>• High knee kicks to target (2 minutes)</li>
+                  <li>• Jump squats with kicks (1 minute)</li>
+                  <li>• Plyometric lunges (1 minute)</li>
+                  <li>• Shadow boxing intervals (30s on, 30s rest × 4)</li>
+                  <li>• Core-specific kicks (knees to chest, side crunches)</li>
+                </ul>
+              </div>
+              
+              <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                <h4 class="font-semibold text-blue-700 mb-2">Cool-down (5 minutes)</h4>
+                <ul class="space-y-1 text-blue-800 font-sans text-sm">
+                  <li>• Static stretching for legs and hips</li>
+                  <li>• Deep breathing exercises</li>
+                  <li>• Light meditation or mindfulness</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Running Session -->
+          <div>
+            <h3 class="text-xl font-semibold text-emerald-600 mb-4">Interval Run (30 minutes)</h3>
+            
+            <div class="bg-slate-50 rounded-lg p-4 border border-slate-200">
+              <h4 class="font-semibold text-slate-700 mb-3">🏃‍♂️ Running Structure</h4>
+              <ol class="space-y-2 text-slate-800 font-sans">
+                <li><strong>1. Warm-up:</strong> 5 minutes easy jog</li>
+                <li><strong>2. Intervals:</strong> 6 × 2 minutes at moderate-hard effort</li>
+                <li><strong>3. Recovery:</strong> 1 minute easy jog between intervals</li>
+                <li><strong>4. Cool-down:</strong> 5 minutes easy jog + walking</li>
+              </ol>
+              
+              <div class="mt-4 p-3 bg-emerald-100 rounded-lg">
+                <h5 class="font-semibold text-emerald-700 mb-2">Benefits for Badminton</h5>
+                <ul class="space-y-1 text-emerald-800 font-sans text-sm">
+                  <li>• Improves cardiovascular endurance for long matches</li>
+                  <li>• Builds leg strength for court movement</li>
+                  <li>• Enhances recovery between points</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thursday: Upper Body -->
+      <div class="exercise-day page-break-avoid bg-white rounded-xl shadow-md p-6">
+        <h2 class="text-2xl font-bold text-emerald-700 mb-4">🏋️ Thursday: Upper Body Strength Training (45 minutes)</h2>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Warm-up -->
+          <div class="bg-amber-50 rounded-lg p-4 border border-amber-200">
+            <h3 class="text-lg font-semibold text-amber-700 mb-3">🔥 Warm-up (8 minutes)</h3>
+            <ol class="space-y-2 text-amber-800 font-sans text-sm">
+              <li><strong>1.</strong> Arm circles and shoulder rolls</li>
+              <li><strong>2.</strong> Light rowing machine or arm bike</li>
+              <li><strong>3.</strong> Band pull-aparts</li>
+            </ol>
+          </div>
+          
+          <!-- Main Workout -->
+          <div class="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
+            <h3 class="text-lg font-semibold text-emerald-700 mb-3">💥 Main Workout (30 minutes)</h3>
+            <ol class="space-y-2 text-emerald-800 font-sans text-sm">
+              <li><strong>Chest Press Machine:</strong> 4 sets × 12-15 reps</li>
+              <li><strong>Lat Pulldown:</strong> 4 sets × 12-15 reps</li>
+              <li><strong>Shoulder Press Machine:</strong> 3 sets × 12-15 reps</li>
+              <li><strong>Seated Row:</strong> 3 sets × 12-15 reps</li>
+              <li><strong>Tricep Pushdown:</strong> 3 sets × 12-15 reps</li>
+              <li><strong>Bicep Curls:</strong> 3 sets × 12-15 reps</li>
+            </ol>
+          </div>
+          
+          <!-- Cool-down -->
+          <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
+            <h3 class="text-lg font-semibold text-blue-700 mb-3">🧘 Cool-down (7 minutes)</h3>
+            <ol class="space-y-2 text-blue-800 font-sans text-sm">
+              <li><strong>1.</strong> Upper body stretching routine</li>
+              <li><strong>2.</strong> Chest doorway stretch</li>
+              <li><strong>3.</strong> Shoulder and tricep stretches</li>
+            </ol>
+          </div>
+        </div>
+        
+        <!-- Taekwondo Flexibility Follow-up -->
+        <div class="mt-6 bg-purple-50 rounded-lg p-4 border border-purple-200">
+          <h3 class="text-lg font-semibold text-purple-700 mb-3">🥋 Taekwondo Flexibility & Flow (30 minutes)</h3>
+          <div class="grid md:grid-cols-3 gap-4 text-sm font-sans">
+            <div>
+              <h4 class="font-semibold text-purple-600 mb-2">Active Warm-up (8 min)</h4>
+              <ul class="space-y-1 text-purple-800">
+                <li>• Gentle joint mobility sequence</li>
+                <li>• Controlled leg swings and circles</li>
+                <li>• Arm and shoulder preparation</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold text-purple-600 mb-2">Flow Sequences (15 min)</h4>
+              <ul class="space-y-1 text-purple-800">
+                <li>• Slow-motion techniques: perfect form</li>
+                <li>• Balance challenges: single-leg stands</li>
+                <li>• Breathing coordination with movements</li>
+                <li>• Flexibility kicks: increase height gradually</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold text-purple-600 mb-2">Flexibility Focus (7 min)</h4>
+              <ul class="space-y-1 text-purple-800">
+                <li>• Hip flexor stretches (important for kicks)</li>
+                <li>• Hamstring and calf stretches</li>
+                <li>• Spinal twists and side stretches</li>
+                <li>• Deep relaxation poses</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Saturday: Long Run + Circuit -->
+      <div class="exercise-day page-break-avoid bg-white rounded-xl shadow-md p-6">
+        <h2 class="text-2xl font-bold text-emerald-700 mb-4">🏃‍♂️ Saturday: Long Run + Full Body Circuit</h2>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Long Run -->
+          <div>
+            <h3 class="text-xl font-semibold text-emerald-600 mb-4">Long Run (60 minutes)</h3>
+            
+            <div class="bg-slate-50 rounded-lg p-4 border border-slate-200 mb-4">
+              <h4 class="font-semibold text-slate-700 mb-3">🎯 Build Endurance Base</h4>
+              <ul class="space-y-2 text-slate-800 font-sans">
+                <li><strong>Pace:</strong> Conversational pace (could talk while running)</li>
+                <li><strong>Route:</strong> Mix of terrain if possible (hills, flat, trails)</li>
+                <li><strong>Hydration:</strong> Carry water for runs over 45 minutes</li>
+                <li><strong>Progression:</strong> Increase distance by 10% each week</li>
+              </ul>
+            </div>
+            
+            <div class="bg-emerald-100 rounded-lg p-4">
+              <h4 class="font-semibold text-emerald-700 mb-3">📈 Month 1 Progression</h4>
+              <ul class="space-y-1 text-emerald-800 font-sans">
+                <li><strong>Week 1:</strong> 4 miles</li>
+                <li><strong>Week 2:</strong> 4.5 miles</li>
+                <li><strong>Week 3:</strong> 5 miles</li>
+                <li><strong>Week 4:</strong> 4 miles (recovery week)</li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Full Body Circuit -->
+          <div>
+            <h3 class="text-xl font-semibold text-emerald-600 mb-4">Full Body Circuit (30 minutes)</h3>
+            
+            <div class="bg-red-50 rounded-lg p-4 border border-red-200">
+              <h4 class="font-semibold text-red-700 mb-3">🔄 Circuit (Repeat 3 rounds)</h4>
+              <p class="text-sm text-red-600 mb-3 font-sans">45 seconds work, 15 seconds rest</p>
+              
+              <ol class="space-y-2 text-red-800 font-sans text-sm">
+                <li><strong>1.</strong> Bodyweight Squats</li>
+                <li><strong>2.</strong> Push-ups (modified as needed)</li>
+                <li><strong>3.</strong> Mountain Climbers</li>
+                <li><strong>4.</strong> Seated Rows (resistance band)</li>
+                <li><strong>5.</strong> Plank Hold</li>
+                <li><strong>6.</strong> Jumping Jacks or Step-ups</li>
+                <li><strong>7.</strong> Burpees (modified as needed)</li>
+                <li><strong>8.</strong> Dead Bug (core exercise)</li>
+              </ol>
+              
+              <p class="mt-3 text-red-600 font-semibold text-sm">Rest 2 minutes between rounds</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Progression Guidelines -->
+    <section class="bg-emerald-50 rounded-xl p-6 border border-emerald-200">
+      <h2 class="text-2xl font-bold text-emerald-700 mb-4 text-center">📈 Progression Guidelines</h2>
+      
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="text-lg font-semibold text-emerald-600 mb-3">💪 Strength Training Progression</h3>
+          <ul class="space-y-2 text-emerald-800 font-sans">
+            <li><strong>Week 1-2:</strong> Focus on form and moderate weights</li>
+            <li><strong>Week 3-4:</strong> Increase weights by 5-10%</li>
+            <li><strong>Week 5-6:</strong> Add additional sets or exercises</li>
+            <li><strong>Always:</strong> Prioritize proper form over heavy weight</li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold text-emerald-600 mb-3">🏃‍♂️ Recovery & Nutrition</h3>
+          <ul class="space-y-2 text-emerald-800 font-sans">
+            <li><strong>Post-workout:</strong> Protein within 2 hours</li>
+            <li><strong>Sleep:</strong> 7-9 hours for muscle recovery</li>
+            <li><strong>Listen:</strong> Rest when your body needs it</li>
+            <li><strong>Hydration:</strong> Stay hydrated throughout the day</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Taekwondo Benefits -->
+      <div class="mt-6 bg-white rounded-lg p-4 shadow-sm">
+        <h3 class="text-lg font-semibold text-emerald-600 mb-3 text-center">🥋 Taekwondo Training Benefits</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center text-sm font-sans">
+          <div>
+            <div class="font-bold text-emerald-600">Balance</div>
+            <div class="text-slate-600">Improves coordination for badminton</div>
+          </div>
+          <div>
+            <div class="font-bold text-emerald-600">Core Strength</div>
+            <div class="text-slate-600">Enhances stability and power</div>
+          </div>
+          <div>
+            <div class="font-bold text-emerald-600">Flexibility</div>
+            <div class="text-slate-600">Increases leg flexibility and power</div>
+          </div>
+          <div>
+            <div class="font-bold text-emerald-600">Mental Focus</div>
+            <div class="text-slate-600">Provides stress relief and concentration</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Print note -->
+    <div class="mt-8 text-center text-slate-600 font-sans">
+      <p class="text-sm">🖨️ This exercise plan is optimized for printing - track your workouts easily!</p>
+    </div>
+  </main>
+</Layout>

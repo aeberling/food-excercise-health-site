@@ -1,0 +1,223 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+---
+
+<Layout title="Mediterranean Power Plan - Progress">
+  <Navigation />
+  
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="text-center mb-8">
+      <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-xl p-8 shadow-lg">
+        <h1 class="text-4xl font-bold mb-2">Your Progress</h1>
+        <p class="text-xl opacity-90 font-sans">Mediterranean Health Journey Tracking</p>
+      </div>
+    </header>
+
+    <!-- Summary Cards -->
+    <section class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" id="summary-section">
+      <div class="bg-white rounded-xl shadow-md p-6 border border-emerald-100">
+        <div class="text-3xl mb-2">📅</div>
+        <h3 class="text-lg font-semibold text-emerald-700 mb-2">Total Days</h3>
+        <p class="text-3xl font-bold text-emerald-600" id="total-days">0</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md p-6 border border-amber-100">
+        <div class="text-3xl mb-2">🍽️</div>
+        <h3 class="text-lg font-semibold text-amber-700 mb-2">Meals Completed</h3>
+        <p class="text-3xl font-bold text-amber-600" id="meals-percentage">0%</p>
+        <p class="text-sm text-slate-600 mt-1" id="meals-detail">0/0 meals</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md p-6 border border-red-100">
+        <div class="text-3xl mb-2">💪</div>
+        <h3 class="text-lg font-semibold text-red-700 mb-2">Exercise Rate</h3>
+        <p class="text-3xl font-bold text-red-600" id="exercise-percentage">0%</p>
+        <p class="text-sm text-slate-600 mt-1" id="exercise-detail">0/0 workouts</p>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md p-6 border border-blue-100">
+        <div class="text-3xl mb-2">💧</div>
+        <h3 class="text-lg font-semibold text-blue-700 mb-2">Avg Water</h3>
+        <p class="text-3xl font-bold text-blue-600" id="water-average">0</p>
+        <p class="text-sm text-slate-600 mt-1">glasses/day</p>
+      </div>
+    </section>
+
+    <!-- Detailed Progress -->
+    <section class="bg-white rounded-xl shadow-md p-6 mb-8">
+      <h2 class="text-2xl font-bold text-emerald-700 mb-6">Daily Breakdown</h2>
+      
+      <div class="grid md:grid-cols-3 gap-6 mb-6">
+        <!-- Breakfast Progress -->
+        <div class="text-center">
+          <h3 class="text-lg font-semibold text-amber-700 mb-3">🍳 Breakfast</h3>
+          <div class="bg-amber-100 rounded-full p-4 mb-3 inline-block">
+            <div class="text-2xl font-bold text-amber-600" id="breakfast-percentage">0%</div>
+          </div>
+          <p class="text-sm text-slate-600" id="breakfast-detail">0/0 completed</p>
+        </div>
+
+        <!-- Lunch Progress -->
+        <div class="text-center">
+          <h3 class="text-lg font-semibold text-emerald-700 mb-3">🥗 Lunch</h3>
+          <div class="bg-emerald-100 rounded-full p-4 mb-3 inline-block">
+            <div class="text-2xl font-bold text-emerald-600" id="lunch-percentage">0%</div>
+          </div>
+          <p class="text-sm text-slate-600" id="lunch-detail">0/0 completed</p>
+        </div>
+
+        <!-- Dinner Progress -->
+        <div class="text-center">
+          <h3 class="text-lg font-semibold text-blue-700 mb-3">🍽️ Dinner</h3>
+          <div class="bg-blue-100 rounded-full p-4 mb-3 inline-block">
+            <div class="text-2xl font-bold text-blue-600" id="dinner-percentage">0%</div>
+          </div>
+          <p class="text-sm text-slate-600" id="dinner-detail">0/0 completed</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="bg-white rounded-xl shadow-md p-6 mb-8">
+      <h2 class="text-2xl font-bold text-emerald-700 mb-6">Recent Activity</h2>
+      <div id="recent-activity" class="space-y-3">
+        <!-- Activity items will be populated by JavaScript -->
+      </div>
+    </section>
+
+    <!-- Export & Actions -->
+    <section class="text-center">
+      <button onclick="exportToCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-medium mr-4">
+        📄 Export to CSV
+      </button>
+      <button onclick="clearAllData()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium">
+        🗑️ Clear All Data
+      </button>
+      <div class="mt-4">
+        <a href="/today" class="text-emerald-600 hover:text-emerald-700 font-medium">← Back to Today's Plan</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    import { LocalTracker } from '../utils/localTracker';
+
+    let tracker = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      tracker = new LocalTracker();
+      loadProgressData();
+    });
+
+    function loadProgressData() {
+      if (!tracker) return;
+
+      const summary = tracker.getSummary();
+      const allData = tracker.getAllData();
+      
+      // Update summary cards
+      document.getElementById('total-days').textContent = summary.totalDays.toString();
+      
+      // Calculate meal completion rate
+      const totalMeals = summary.totalDays * 3; // 3 meals per day
+      const completedMeals = summary.breakfastCompleted + summary.lunchCompleted + summary.dinnerCompleted;
+      const mealPercentage = totalMeals > 0 ? Math.round((completedMeals / totalMeals) * 100) : 0;
+      
+      document.getElementById('meals-percentage').textContent = `${mealPercentage}%`;
+      document.getElementById('meals-detail').textContent = `${completedMeals}/${totalMeals} meals`;
+      
+      // Exercise completion rate
+      const exercisePercentage = summary.totalDays > 0 ? Math.round((summary.exerciseCompleted / summary.totalDays) * 100) : 0;
+      document.getElementById('exercise-percentage').textContent = `${exercisePercentage}%`;
+      document.getElementById('exercise-detail').textContent = `${summary.exerciseCompleted}/${summary.totalDays} workouts`;
+      
+      // Water average
+      document.getElementById('water-average').textContent = summary.averageWater.toString();
+
+      // Individual meal percentages
+      const breakfastPercentage = summary.totalDays > 0 ? Math.round((summary.breakfastCompleted / summary.totalDays) * 100) : 0;
+      const lunchPercentage = summary.totalDays > 0 ? Math.round((summary.lunchCompleted / summary.totalDays) * 100) : 0;
+      const dinnerPercentage = summary.totalDays > 0 ? Math.round((summary.dinnerCompleted / summary.totalDays) * 100) : 0;
+
+      document.getElementById('breakfast-percentage').textContent = `${breakfastPercentage}%`;
+      document.getElementById('breakfast-detail').textContent = `${summary.breakfastCompleted}/${summary.totalDays} completed`;
+      
+      document.getElementById('lunch-percentage').textContent = `${lunchPercentage}%`;
+      document.getElementById('lunch-detail').textContent = `${summary.lunchCompleted}/${summary.totalDays} completed`;
+      
+      document.getElementById('dinner-percentage').textContent = `${dinnerPercentage}%`;
+      document.getElementById('dinner-detail').textContent = `${summary.dinnerCompleted}/${summary.totalDays} completed`;
+
+      // Load recent activity
+      loadRecentActivity(allData);
+    }
+
+    function loadRecentActivity(allData) {
+      const container = document.getElementById('recent-activity');
+      if (!container) return;
+
+      const entries = Object.values(allData)
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .slice(0, 7); // Show last 7 days
+
+      if (entries.length === 0) {
+        container.innerHTML = '<p class="text-slate-500 text-center">No tracking data yet. Start using the app to see your progress!</p>';
+        return;
+      }
+
+      container.innerHTML = entries.map(entry => {
+        const date = new Date(entry.date).toLocaleDateString('en-US', { 
+          weekday: 'short', 
+          month: 'short', 
+          day: 'numeric' 
+        });
+        
+        const completedItems = [];
+        if (entry.breakfast) completedItems.push('🍳 Breakfast');
+        if (entry.lunch) completedItems.push('🥗 Lunch');
+        if (entry.dinner) completedItems.push('🍽️ Dinner');
+        if (entry.exercise) completedItems.push('💪 Exercise');
+        if (entry.waterGlasses > 0) completedItems.push(`💧 ${entry.waterGlasses} glasses`);
+
+        return `
+          <div class="flex justify-between items-center p-4 bg-slate-50 rounded-lg">
+            <div>
+              <div class="font-semibold text-slate-700">${date}</div>
+              <div class="text-sm text-slate-600">
+                ${completedItems.length > 0 ? completedItems.join(', ') : 'No activities completed'}
+              </div>
+            </div>
+            <div class="text-emerald-600 font-medium">
+              ${completedItems.length}/5 completed
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function exportToCSV() {
+      if (!tracker) {
+        alert('Tracker not initialized. Please refresh the page.');
+        return;
+      }
+
+      tracker.downloadCSV();
+      alert('CSV file downloaded! You can now import this into Google Sheets or Excel.');
+    }
+
+    function clearAllData() {
+      if (confirm('Are you sure you want to clear all tracking data? This cannot be undone.')) {
+        localStorage.removeItem('mediterranean-health-tracking');
+        localStorage.removeItem('waterCount');
+        alert('All data cleared!');
+        location.reload();
+      }
+    }
+
+    // Make functions available globally
+    window.exportToCSV = exportToCSV;
+    window.clearAllData = clearAllData;
+  </script>
+</Layout>
