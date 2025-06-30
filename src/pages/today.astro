@@ -7,12 +7,6 @@ import { getTodaysQuote } from '../data/quotes';
 const todaysPlan = getTodaysPlan();
 const currentWeek = getCurrentWeek();
 const todaysQuote = getTodaysQuote();
-const today = new Date().toLocaleDateString('en-US', { 
-  weekday: 'long', 
-  year: 'numeric', 
-  month: 'long', 
-  day: 'numeric' 
-});
 ---
 
 <Layout title="Mediterranean Power Plan - Today's Plan">
@@ -22,8 +16,33 @@ const today = new Date().toLocaleDateString('en-US', {
     <!-- Header with Date and Quote -->
     <header class="text-center mb-8">
       <div class="bg-gradient-to-r from-emerald-600 to-emerald-700 text-white rounded-xl p-8 shadow-lg mb-6">
-        <h1 class="text-4xl font-bold mb-2">Today's Plan</h1>
-        <p class="text-xl opacity-90 font-sans">{today}</p>
+        <h1 class="text-4xl font-bold mb-2">Daily Plan</h1>
+        
+        <!-- Date Navigation -->
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <button onclick="changeDate(-1)" class="bg-emerald-500 hover:bg-emerald-400 text-white p-2 rounded-lg transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+          
+          <div class="flex items-center gap-2">
+            <button onclick="openDatePicker()" class="text-white hover:text-emerald-200 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </button>
+            <input type="date" id="date-picker" class="hidden" onchange="onDateChange()" />
+            <div id="date-display" class="text-xl font-sans"></div>
+          </div>
+          
+          <button onclick="changeDate(1)" class="bg-emerald-500 hover:bg-emerald-400 text-white p-2 rounded-lg transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+        
         <p class="text-lg opacity-80 font-sans mt-2">Week {currentWeek} • {todaysPlan?.day}</p>
       </div>
       
@@ -294,33 +313,25 @@ const today = new Date().toLocaleDateString('en-US', {
         if (display) {
           display.textContent = waterCount.toString();
         }
-        // Store in localStorage
-        localStorage.setItem('waterCount', waterCount.toString());
-        // Auto-save locally
+        // Auto-save locally (water count is stored in the tracking data)
         autoSaveLocally();
       }
     }
 
-    // Local storage integration
+    // Date and local storage integration
     let tracker = null;
+    let currentDate = new Date();
 
     // Initialize local tracker and load existing data
     document.addEventListener('DOMContentLoaded', () => {
       // Initialize tracker
       tracker = new LocalTracker();
       
-      // Load water count from localStorage
-      const saved = localStorage.getItem('waterCount');
-      if (saved) {
-        waterCount = parseInt(saved);
-        const display = document.getElementById('water-count');
-        if (display) {
-          display.textContent = waterCount.toString();
-        }
-      }
-
-      // Load existing tracking data from local storage
-      loadCurrentTrackingState();
+      // Set up date picker with today's date
+      updateDateDisplay();
+      
+      // Load data for current date
+      loadDataForDate();
 
       // Add event listeners for auto-save
       const checkboxes = document.querySelectorAll('#breakfast-check, #lunch-check, #dinner-check, #exercise-check');
@@ -329,12 +340,129 @@ const today = new Date().toLocaleDateString('en-US', {
       });
     });
 
+    // Date navigation functions
+    function changeDate(days) {
+      currentDate.setDate(currentDate.getDate() + days);
+      updateDateDisplay();
+      loadDataForDate();
+    }
+
+    function onDateChange() {
+      const picker = document.getElementById('date-picker');
+      if (picker && picker.value) {
+        currentDate = new Date(picker.value + 'T00:00:00');
+        updateDateDisplay();
+        loadDataForDate();
+      }
+    }
+
+    function updateDateDisplay() {
+      const picker = document.getElementById('date-picker');
+      const display = document.getElementById('date-display');
+      
+      if (picker) {
+        picker.value = currentDate.toISOString().split('T')[0];
+      }
+      
+      if (display) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const displayDate = new Date(currentDate);
+        displayDate.setHours(0, 0, 0, 0);
+        
+        const isToday = displayDate.getTime() === today.getTime();
+        const isYesterday = displayDate.getTime() === today.getTime() - 24*60*60*1000;
+        
+        if (isToday) {
+          display.textContent = "Today";
+        } else if (isYesterday) {
+          display.textContent = "Yesterday";
+        } else {
+          display.textContent = currentDate.toLocaleDateString('en-US', { 
+            month: 'short', 
+            day: 'numeric',
+            year: currentDate.getFullYear() !== today.getFullYear() ? 'numeric' : undefined
+          });
+        }
+      }
+    }
+
+    function openDatePicker() {
+      const picker = document.getElementById('date-picker');
+      if (picker) {
+        picker.showPicker();
+      }
+    }
+
+    function loadDataForDate() {
+      if (!tracker) return;
+
+      const dateString = currentDate.toISOString().split('T')[0];
+      const data = tracker.getTrackingData(dateString);
+      
+      // Update checkboxes
+      const breakfastCheck = document.querySelector('#breakfast-check');
+      const lunchCheck = document.querySelector('#lunch-check');
+      const dinnerCheck = document.querySelector('#dinner-check');
+      const exerciseCheck = document.querySelector('#exercise-check');
+      const waterDisplay = document.getElementById('water-count');
+
+      if (data) {
+        if (breakfastCheck) breakfastCheck.checked = data.breakfast;
+        if (lunchCheck) lunchCheck.checked = data.lunch;
+        if (dinnerCheck) dinnerCheck.checked = data.dinner;
+        if (exerciseCheck) exerciseCheck.checked = data.exercise;
+        
+        // Update water count
+        waterCount = data.waterGlasses;
+        if (waterDisplay) {
+          waterDisplay.textContent = waterCount.toString();
+        }
+      } else {
+        // Clear everything for new date
+        if (breakfastCheck) breakfastCheck.checked = false;
+        if (lunchCheck) lunchCheck.checked = false;
+        if (dinnerCheck) dinnerCheck.checked = false;
+        if (exerciseCheck) exerciseCheck.checked = false;
+        
+        waterCount = 0;
+        if (waterDisplay) {
+          waterDisplay.textContent = '0';
+        }
+      }
+    }
+
     // Auto-save function
     function autoSaveLocally() {
       if (!tracker) return;
       
-      const success = saveCurrentTrackingState();
-      console.log('Auto-saved locally:', success);
+      const success = saveTrackingStateForDate(currentDate);
+      console.log('Auto-saved locally for', currentDate.toISOString().split('T')[0], ':', success);
+    }
+
+    // Save tracking state for specific date
+    function saveTrackingStateForDate(date) {
+      if (!tracker) return false;
+
+      const dateString = date.toISOString().split('T')[0];
+      
+      // Get current state from checkboxes
+      const breakfast = document.querySelector('#breakfast-check')?.checked || false;
+      const lunch = document.querySelector('#lunch-check')?.checked || false;
+      const dinner = document.querySelector('#dinner-check')?.checked || false;
+      const exercise = document.querySelector('#exercise-check')?.checked || false;
+
+      const trackingData = {
+        date: dateString,
+        breakfast,
+        lunch,
+        dinner,
+        exercise,
+        waterGlasses: waterCount,
+        notes: `Mediterranean Diet Day - Week ${Math.floor(Date.now() / (1000 * 60 * 60 * 24 * 7)) % 2 + 1}`
+      };
+
+      return tracker.saveTrackingData(trackingData);
     }
 
     // Export to CSV function
@@ -364,5 +492,8 @@ const today = new Date().toLocaleDateString('en-US', {
     window.resetTimer = resetTimer;
     window.addWater = addWater;
     window.exportToCSV = exportToCSV;
+    window.changeDate = changeDate;
+    window.onDateChange = onDateChange;
+    window.openDatePicker = openDatePicker;
   </script>
 </Layout>
