@@ -140,6 +140,8 @@ export function saveCurrentTrackingState(): boolean {
   const alcoholFree = document.querySelector<HTMLInputElement>('#alcohol-free-check')?.checked || false;
   const waterGlasses = parseInt(localStorage.getItem('waterCount') || '0');
   const notes = document.querySelector<HTMLTextAreaElement>('#daily-notes')?.value || '';
+  const weightInput = document.querySelector<HTMLInputElement>('#weight-input')?.value;
+  const weight = weightInput ? parseFloat(weightInput) : undefined;
 
   const trackingData: TrackingData = {
     date: today,
@@ -149,6 +151,7 @@ export function saveCurrentTrackingState(): boolean {
     exercise,
     waterGlasses,
     alcoholFree,
+    weight,
     notes: notes || `Mediterranean Diet Day - Week ${Math.floor(Date.now() / (1000 * 60 * 60 * 24 * 7)) % 2 + 1}`
   };
 
@@ -169,6 +172,7 @@ export function loadCurrentTrackingState(): void {
     const alcoholFreeCheck = document.querySelector<HTMLInputElement>('#alcohol-free-check');
     const notesField = document.querySelector<HTMLTextAreaElement>('#daily-notes');
     const waterDisplay = document.getElementById('water-count');
+    const weightInput = document.querySelector<HTMLInputElement>('#weight-input');
 
     if (breakfastCheck) breakfastCheck.checked = data.breakfast;
     if (lunchCheck) lunchCheck.checked = data.lunch;
@@ -176,6 +180,7 @@ export function loadCurrentTrackingState(): void {
     if (exerciseCheck) exerciseCheck.checked = data.exercise;
     if (alcoholFreeCheck) alcoholFreeCheck.checked = data.alcoholFree || false;
     if (notesField) notesField.value = data.notes || '';
+    if (weightInput) weightInput.value = data.weight ? data.weight.toString() : '';
     
     // Update water count
     if (waterDisplay) {

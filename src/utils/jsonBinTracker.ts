@@ -17,25 +17,32 @@ export class JSONBinTracker {
   private baseUrl = 'https://api.jsonbin.io/v3';
 
   constructor() {
-    this.binId = import.meta.env.PUBLIC_JSONBIN_ID || '';
+    // Debug environment variables
+    console.log('Environment check:', {
+      hasPublicJsonBinId: !!import.meta.env.PUBLIC_JSONBIN_ID,
+      hasPublicJsonBinKey: !!import.meta.env.PUBLIC_JSONBIN_KEY,
+      binIdValue: import.meta.env.PUBLIC_JSONBIN_ID || 'not set',
+      keyLength: import.meta.env.PUBLIC_JSONBIN_KEY?.length || 0
+    });
+    
+    // Hardcode both values as fallback for Kinsta deployment issues
+    this.binId = import.meta.env.PUBLIC_JSONBIN_ID || '6863631a8561e97a502f631e';
     
     // Temporary fix: hardcode the API key due to Vite env var issue with $ characters
     // TODO: Move to server-side API or use a different auth method
     const envKey = import.meta.env.PUBLIC_JSONBIN_KEY || '';
     
-    // If the key is truncated (less than 60 chars), use the hardcoded one
-    if (envKey && envKey.length < 60) {
-      console.warn('API key was truncated by Vite, using hardcoded key');
-      this.apiKey = '$2a$10$CxSu0lm8PAzkSeYbBCxZ3.hJd789yGDxwt6BcpOnnSNIpREjWbs4.';
-    } else {
-      this.apiKey = envKey;
-    }
+    // Always use hardcoded key for now due to build issues
+    this.apiKey = '$2a$10$CxSu0lm8PAzkSeYbBCxZ3.hJd789yGDxwt6BcpOnnSNIpREjWbs4.';
     
     if (!this.binId || !this.apiKey) {
-      console.warn('JSONBin.io credentials not configured');
+      console.error('JSONBin.io credentials not configured - this should not happen!');
     } else {
-      console.log('JSONBin.io configured with bin:', this.binId);
-      console.log('API Key loaded: Yes (length: ' + this.apiKey.length + ')');
+      console.log('JSONBin.io configured:', {
+        binId: this.binId,
+        apiKeyLength: this.apiKey.length,
+        usingHardcoded: true
+      });
     }
   }
 
