@@ -17,6 +17,11 @@ export class SimpleUnifiedTracker {
     this.syncFromCloud().catch(() => {
       console.log('Initial cloud sync failed, using local data only');
     });
+    
+    // Preload last 7 days of data
+    this.preloadRecentData().catch(() => {
+      console.log('Failed to preload recent data');
+    });
   }
 
   /**
@@ -175,6 +180,80 @@ export class SimpleUnifiedTracker {
   }
 
   /**
+   * Preload last 7 days of data from cloud
+   */
+  async preloadRecentData(): Promise<void> {
+    if (!this.jsonBinTracker.isConfigured()) {
+      console.log('Cloud storage not configured, skipping preload');
+      return;
+    }
+
+    try {
+      const today = new Date();
+      const dates: string[] = [];
+      
+      // Generate date strings for last 7 days including today
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        dates.push(toLocalDateString(date));
+      }
+      
+      console.log('Preloading data for dates:', dates);
+      
+      // Load all data from cloud
+      const cloudData = await this.jsonBinTracker.loadAllData();
+      
+      // Save recent data to local storage
+      let loadedCount = 0;
+      for (const dateStr of dates) {
+        if (cloudData[dateStr] && !this.localTracker.getTrackingData(dateStr)) {
+          this.localTracker.saveTrackingData(cloudData[dateStr]);
+          loadedCount++;
+        }
+      }
+      
+      if (loadedCount > 0) {
+        console.log(`Preloaded ${loadedCount} days of recent data from cloud`);
+      }
+    } catch (error) {
+      console.error('Failed to preload recent data:', error);
+    }
+  }
+
+  /**
+   * Load data for a specific date from cloud
+   */
+  async loadDataForDate(date: Date): Promise<TrackingData | null> {
+    const dateString = toLocalDateString(date);
+    
+    // First check local storage
+    let data = this.localTracker.getTrackingData(dateString);
+    
+    // If not found locally and cloud is configured, try loading from cloud
+    if (!data && this.jsonBinTracker.isConfigured()) {
+      try {
+        this.updateSyncStatusUI('syncing', 'Loading from cloud...');
+        const cloudData = await this.jsonBinTracker.loadAllData();
+        
+        if (cloudData[dateString]) {
+          // Save to local storage
+          this.localTracker.saveTrackingData(cloudData[dateString]);
+          data = cloudData[dateString];
+          this.updateSyncStatusUI('success', 'Loaded from cloud');
+        } else {
+          this.updateSyncStatusUI('success', 'No data for this date');
+        }
+      } catch (error) {
+        console.error('Failed to load from cloud:', error);
+        this.updateSyncStatusUI('error', 'Failed to load from cloud');
+      }
+    }
+    
+    return data;
+  }
+
+  /**
    * Update UI with sync status
    */
   private updateSyncStatusUI(status: 'syncing' | 'success' | 'error', message?: string) {
@@ -228,8 +307,8 @@ export async function saveCurrentTrackingState(tracker: SimpleUnifiedTracker, da
 }
 
 export async function loadCurrentTrackingState(tracker: SimpleUnifiedTracker, date: Date): Promise<void> {
-  const dateString = toLocalDateString(date);
-  const data = tracker.getTrackingData(dateString);
+  // Load data from cloud if needed
+  const data = await tracker.loadDataForDate(date);
   
   // Get all the form elements
   const breakfastCheck = document.querySelector('#breakfast-check') as HTMLInputElement;
