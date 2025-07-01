@@ -103,6 +103,9 @@ const todaysQuote = getTodaysQuote();
         <button onclick="exportToCSV()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">
           📄 Export CSV
         </button>
+        <button onclick="syncNow()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium ml-2">
+          ☁️ Sync Now
+        </button>
         <div id="save-status" class="mt-2 text-sm text-emerald-600">Auto-saving locally ✓</div>
       </div>
     </section>
@@ -259,7 +262,7 @@ const todaysQuote = getTodaysQuote();
   </main>
 
   <script>
-    import { LocalTracker, saveCurrentTrackingState, loadCurrentTrackingState } from '../utils/localTracker';
+    import { SimpleUnifiedTracker, saveCurrentTrackingState, loadCurrentTrackingState } from '../utils/simpleUnifiedTracker';
 
     // Timer functionality
     let timerInterval;
@@ -318,20 +321,26 @@ const todaysQuote = getTodaysQuote();
       }
     }
 
-    // Date and local storage integration
+    // Date and unified storage integration
     let tracker = null;
     let currentDate = new Date();
 
-    // Initialize local tracker and load existing data
+    // Initialize unified tracker and load existing data
     document.addEventListener('DOMContentLoaded', () => {
       // Initialize tracker
-      tracker = new LocalTracker();
+      tracker = new SimpleUnifiedTracker();
       
       // Set up date picker with today's date
       updateDateDisplay();
       
       // Load data for current date
       loadDataForDate();
+
+      // Initial sync status
+      const syncStatus = tracker.getSyncStatus();
+      if (syncStatus.isConfigured) {
+        console.log('Cloud sync is configured and ready');
+      }
 
       // Add event listeners for auto-save
       const checkboxes = document.querySelectorAll('#breakfast-check, #lunch-check, #dinner-check, #exercise-check');
@@ -394,75 +403,47 @@ const todaysQuote = getTodaysQuote();
       }
     }
 
-    function loadDataForDate() {
+    async function loadDataForDate() {
       if (!tracker) return;
 
-      const dateString = currentDate.toISOString().split('T')[0];
-      const data = tracker.getTrackingData(dateString);
+      // Load data using the unified tracker (syncs from Google Sheets if available)
+      await loadCurrentTrackingState(tracker, currentDate);
       
-      // Update checkboxes
-      const breakfastCheck = document.querySelector('#breakfast-check');
-      const lunchCheck = document.querySelector('#lunch-check');
-      const dinnerCheck = document.querySelector('#dinner-check');
-      const exerciseCheck = document.querySelector('#exercise-check');
+      // Update local water count from what was loaded
       const waterDisplay = document.getElementById('water-count');
-
-      if (data) {
-        if (breakfastCheck) breakfastCheck.checked = data.breakfast;
-        if (lunchCheck) lunchCheck.checked = data.lunch;
-        if (dinnerCheck) dinnerCheck.checked = data.dinner;
-        if (exerciseCheck) exerciseCheck.checked = data.exercise;
-        
-        // Update water count
-        waterCount = data.waterGlasses;
-        if (waterDisplay) {
-          waterDisplay.textContent = waterCount.toString();
-        }
-      } else {
-        // Clear everything for new date
-        if (breakfastCheck) breakfastCheck.checked = false;
-        if (lunchCheck) lunchCheck.checked = false;
-        if (dinnerCheck) dinnerCheck.checked = false;
-        if (exerciseCheck) exerciseCheck.checked = false;
-        
-        waterCount = 0;
-        if (waterDisplay) {
-          waterDisplay.textContent = '0';
-        }
+      if (waterDisplay) {
+        waterCount = parseInt(waterDisplay.textContent || '0');
       }
     }
 
-    // Auto-save function
-    function autoSaveLocally() {
+    // Auto-save function (now saves to both local and Google Sheets)
+    async function autoSaveLocally() {
       if (!tracker) return;
       
-      const success = saveTrackingStateForDate(currentDate);
-      console.log('Auto-saved locally for', currentDate.toISOString().split('T')[0], ':', success);
+      const success = await saveCurrentTrackingState(tracker, currentDate);
+      console.log('Auto-saved for', currentDate.toISOString().split('T')[0], ':', success);
     }
 
-    // Save tracking state for specific date
-    function saveTrackingStateForDate(date) {
-      if (!tracker) return false;
+    // Sync function
+    async function syncNow() {
+      if (!tracker) {
+        alert('Tracker not initialized. Please refresh the page.');
+        return;
+      }
 
-      const dateString = date.toISOString().split('T')[0];
-      
-      // Get current state from checkboxes
-      const breakfast = document.querySelector('#breakfast-check')?.checked || false;
-      const lunch = document.querySelector('#lunch-check')?.checked || false;
-      const dinner = document.querySelector('#dinner-check')?.checked || false;
-      const exercise = document.querySelector('#exercise-check')?.checked || false;
+      const syncStatus = tracker.getSyncStatus();
+      if (!syncStatus.isConfigured) {
+        alert('Cloud sync is not configured. Check your JSONBin.io credentials.');
+        return;
+      }
 
-      const trackingData = {
-        date: dateString,
-        breakfast,
-        lunch,
-        dinner,
-        exercise,
-        waterGlasses: waterCount,
-        notes: `Mediterranean Diet Day - Week ${Math.floor(Date.now() / (1000 * 60 * 60 * 24 * 7)) % 2 + 1}`
-      };
-
-      return tracker.saveTrackingData(trackingData);
+      const success = await tracker.forceSyncNow();
+      if (success) {
+        // Status message is handled by the tracker
+        console.log('Manual sync completed successfully');
+      } else {
+        alert('Sync failed. Your data is still saved locally.');
+      }
     }
 
     // Export to CSV function
@@ -472,15 +453,23 @@ const todaysQuote = getTodaysQuote();
         return;
       }
 
-      tracker.downloadCSV();
+      const csvContent = tracker.exportToCSV();
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `mediterranean-diet-tracking-${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
       
       const statusDiv = document.getElementById('save-status');
       if (statusDiv) {
-        statusDiv.textContent = 'CSV exported! ✓';
-        statusDiv.className = 'mt-2 text-sm text-blue-600';
+        statusDiv.innerHTML = '<span class="text-blue-600">CSV exported! ✓</span>';
         setTimeout(() => {
-          statusDiv.textContent = 'Auto-saving locally ✓';
-          statusDiv.className = 'mt-2 text-sm text-emerald-600';
+          statusDiv.innerHTML = '<span class="text-emerald-600">Auto-saving locally ✓</span>';
         }, 3000);
       }
     }
@@ -492,6 +481,7 @@ const todaysQuote = getTodaysQuote();
     window.resetTimer = resetTimer;
     window.addWater = addWater;
     window.exportToCSV = exportToCSV;
+    window.syncNow = syncNow;
     window.changeDate = changeDate;
     window.onDateChange = onDateChange;
     window.openDatePicker = openDatePicker;

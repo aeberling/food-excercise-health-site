@@ -1,0 +1,233 @@
+import { LocalTracker } from './localTracker';
+import { JSONBinTracker, type TrackingData } from './jsonBinTracker';
+import { toLocalDateString } from './dateUtils';
+
+export class SimpleUnifiedTracker {
+  private localTracker: LocalTracker;
+  private jsonBinTracker: JSONBinTracker;
+  private syncStatus: 'idle' | 'syncing' | 'error' = 'idle';
+  private lastSyncError: string | null = null;
+  private syncDebounceTimer: NodeJS.Timeout | null = null;
+
+  constructor() {
+    this.localTracker = new LocalTracker();
+    this.jsonBinTracker = new JSONBinTracker();
+    
+    // Load cloud data on initialization (silently)
+    this.syncFromCloud().catch(() => {
+      console.log('Initial cloud sync failed, using local data only');
+    });
+  }
+
+  /**
+   * Save tracking data (local first, then cloud)
+   */
+  async saveTrackingData(data: TrackingData): Promise<boolean> {
+    // Always save to local storage first
+    const localSaved = this.localTracker.saveTrackingData(data);
+    
+    if (!localSaved) {
+      console.error('Failed to save to local storage');
+      return false;
+    }
+
+    // Debounce cloud sync (wait 2 seconds after last change)
+    if (this.syncDebounceTimer) {
+      clearTimeout(this.syncDebounceTimer);
+    }
+
+    this.syncDebounceTimer = setTimeout(() => {
+      this.syncToCloud();
+    }, 2000);
+
+    return true;
+  }
+
+  /**
+   * Get tracking data for a specific date
+   */
+  getTrackingData(date: string): TrackingData | null {
+    return this.localTracker.getTrackingData(date);
+  }
+
+  /**
+   * Get all tracking data
+   */
+  getAllTrackingData(): Record<string, TrackingData> {
+    return this.localTracker.getAllData();
+  }
+
+  /**
+   * Export data as CSV
+   */
+  exportToCSV(): string {
+    return this.localTracker.exportAsCSV();
+  }
+
+  /**
+   * Get summary statistics
+   */
+  getSummary() {
+    return this.localTracker.getSummary();
+  }
+
+  /**
+   * Sync local data to cloud
+   */
+  async syncToCloud(): Promise<boolean> {
+    if (!this.jsonBinTracker.isConfigured()) {
+      this.updateSyncStatusUI('error', 'Cloud storage not configured');
+      return false;
+    }
+
+    this.syncStatus = 'syncing';
+    this.updateSyncStatusUI('syncing');
+
+    try {
+      const allData = this.getAllTrackingData();
+      const success = await this.jsonBinTracker.saveAllData(allData);
+      
+      if (success) {
+        this.syncStatus = 'idle';
+        this.lastSyncError = null;
+        this.updateSyncStatusUI('success');
+        console.log('Successfully synced to cloud');
+      } else {
+        throw new Error('Failed to save to cloud');
+      }
+      
+      return success;
+    } catch (error) {
+      this.syncStatus = 'error';
+      this.lastSyncError = error instanceof Error ? error.message : 'Unknown error';
+      this.updateSyncStatusUI('error', this.lastSyncError);
+      console.error('Cloud sync failed:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Load data from cloud and merge with local
+   */
+  async syncFromCloud(): Promise<void> {
+    if (!this.jsonBinTracker.isConfigured()) {
+      console.log('Cloud storage not configured, using local data only');
+      return;
+    }
+
+    try {
+      this.updateSyncStatusUI('syncing', 'Loading from cloud...');
+      const cloudData = await this.jsonBinTracker.loadAllData();
+      const localData = this.getAllTrackingData();
+      
+      // Merge cloud data with local data (local takes precedence for conflicts)
+      const mergedData = { ...cloudData };
+      
+      // Update local storage with any missing data from cloud
+      let newDataCount = 0;
+      for (const [date, data] of Object.entries(cloudData)) {
+        if (!localData[date]) {
+          this.localTracker.saveTrackingData(data);
+          newDataCount++;
+        }
+      }
+      
+      if (newDataCount > 0) {
+        console.log(`Loaded ${newDataCount} new entries from cloud`);
+        this.updateSyncStatusUI('success', `Synced ${newDataCount} entries from cloud`);
+      } else {
+        // Don't show UI message on initial load if already synced
+        console.log('Cloud data is in sync with local');
+      }
+    } catch (error) {
+      console.error('Failed to sync from cloud:', error);
+      this.updateSyncStatusUI('error', 'Failed to load from cloud');
+    }
+  }
+
+  /**
+   * Force sync now (bypass debounce)
+   */
+  async forceSyncNow(): Promise<boolean> {
+    if (this.syncDebounceTimer) {
+      clearTimeout(this.syncDebounceTimer);
+      this.syncDebounceTimer = null;
+    }
+    return this.syncToCloud();
+  }
+
+  /**
+   * Get sync status
+   */
+  getSyncStatus() {
+    return {
+      status: this.syncStatus,
+      error: this.lastSyncError,
+      isConfigured: this.jsonBinTracker.isConfigured()
+    };
+  }
+
+  /**
+   * Update UI with sync status
+   */
+  private updateSyncStatusUI(status: 'syncing' | 'success' | 'error', message?: string) {
+    const statusElement = document.getElementById('save-status');
+    if (!statusElement) return;
+
+    switch (status) {
+      case 'syncing':
+        statusElement.innerHTML = `<span class="text-blue-600">🔄 ${message || 'Syncing to cloud...'}</span>`;
+        break;
+      case 'success':
+        statusElement.innerHTML = `<span class="text-emerald-600">✓ ${message || 'Saved to cloud'}</span>`;
+        break;
+      case 'error':
+        statusElement.innerHTML = `<span class="text-amber-600">⚠️ Saved locally (cloud: ${message || 'offline'})</span>`;
+        break;
+    }
+  }
+}
+
+// Helper functions
+export async function saveCurrentTrackingState(tracker: SimpleUnifiedTracker, date: Date): Promise<boolean> {
+  const dateString = toLocalDateString(date);
+  
+  const breakfast = (document.querySelector('#breakfast-check') as HTMLInputElement)?.checked || false;
+  const lunch = (document.querySelector('#lunch-check') as HTMLInputElement)?.checked || false;
+  const dinner = (document.querySelector('#dinner-check') as HTMLInputElement)?.checked || false;
+  const exercise = (document.querySelector('#exercise-check') as HTMLInputElement)?.checked || false;
+  
+  const waterDisplay = document.getElementById('water-count');
+  const waterGlasses = parseInt(waterDisplay?.textContent || '0');
+
+  const trackingData: TrackingData = {
+    date: dateString,
+    breakfast,
+    lunch,
+    dinner,
+    exercise,
+    waterGlasses,
+    notes: `Mediterranean Diet Day - Week ${Math.ceil((date.getDay() + 1) / 7)}`
+  };
+
+  return await tracker.saveTrackingData(trackingData);
+}
+
+export async function loadCurrentTrackingState(tracker: SimpleUnifiedTracker, date: Date): Promise<void> {
+  const dateString = toLocalDateString(date);
+  const data = tracker.getTrackingData(dateString);
+  
+  if (data) {
+    const breakfastCheck = document.querySelector('#breakfast-check') as HTMLInputElement;
+    const lunchCheck = document.querySelector('#lunch-check') as HTMLInputElement;
+    const dinnerCheck = document.querySelector('#dinner-check') as HTMLInputElement;
+    const exerciseCheck = document.querySelector('#exercise-check') as HTMLInputElement;
+    const waterDisplay = document.getElementById('water-count');
+
+    if (breakfastCheck) breakfastCheck.checked = data.breakfast;
+    if (lunchCheck) lunchCheck.checked = data.lunch;
+    if (dinnerCheck) dinnerCheck.checked = data.dinner;
+    if (exerciseCheck) exerciseCheck.checked = data.exercise;
+    if (waterDisplay) waterDisplay.textContent = data.waterGlasses.toString();
+  }
+}
