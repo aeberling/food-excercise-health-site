@@ -45,70 +45,304 @@ const todaysQuote = getTodaysQuote();
         
         <p class="text-lg opacity-80 font-sans mt-2">Week {currentWeek} • {todaysPlan?.day}</p>
       </div>
-      
-      <!-- Daily Quote -->
-      <div class="bg-amber-50 border-l-4 border-amber-400 p-6 rounded-r-lg shadow-sm">
-        <blockquote class="text-lg italic text-slate-700 mb-2 font-serif">
-          "{todaysQuote.text}"
-        </blockquote>
-        <cite class="text-sm font-medium text-amber-700 font-sans">— {todaysQuote.author}</cite>
-      </div>
     </header>
 
     <!-- Progress Tracking -->
-    <section class="mb-8 bg-slate-50 rounded-xl p-6 border border-slate-200">
-      <h2 class="text-2xl font-bold text-slate-700 mb-6">📊 Track Your Day</h2>
-      <div class="grid md:grid-cols-3 gap-4">
-        <div class="bg-white rounded-lg p-4">
-          <h3 class="font-semibold text-slate-700 mb-3">Meals Completed</h3>
+    <section class="mb-8 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 shadow-xl border-2 border-purple-200">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">🎯 Daily Progress</h2>
+        <div id="save-status" class="text-sm font-semibold text-purple-600">Auto-saving your wins! ✨</div>
+      </div>
+      
+      <!-- Main tracking grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Meals Section -->
+        <div class="bg-gradient-to-br from-orange-400 to-amber-400 rounded-2xl p-4 shadow-lg transform hover:scale-105 transition-all duration-300">
+          <h3 class="font-black text-white text-lg mb-3">🍽️ Meals</h3>
           <div class="space-y-2">
-            <label class="flex items-center">
-              <input type="checkbox" id="breakfast-check" class="mr-2 text-emerald-600" />
-              <span class="text-sm">Breakfast</span>
+            <label class="duo-checkbox-container">
+              <input type="checkbox" id="breakfast-check" class="duo-checkbox" data-meal="breakfast" />
+              <span class="duo-checkbox-visual">
+                <span class="duo-checkbox-icon">🌅</span>
+              </span>
+              <span class="duo-checkbox-label">Breakfast</span>
             </label>
-            <label class="flex items-center">
-              <input type="checkbox" id="lunch-check" class="mr-2 text-emerald-600" />
-              <span class="text-sm">Lunch</span>
+            <label class="duo-checkbox-container">
+              <input type="checkbox" id="lunch-check" class="duo-checkbox" data-meal="lunch" />
+              <span class="duo-checkbox-visual">
+                <span class="duo-checkbox-icon">☀️</span>
+              </span>
+              <span class="duo-checkbox-label">Lunch</span>
             </label>
-            <label class="flex items-center">
-              <input type="checkbox" id="dinner-check" class="mr-2 text-emerald-600" />
-              <span class="text-sm">Dinner</span>
+            <label class="duo-checkbox-container">
+              <input type="checkbox" id="dinner-check" class="duo-checkbox" data-meal="dinner" />
+              <span class="duo-checkbox-visual">
+                <span class="duo-checkbox-icon">🌙</span>
+              </span>
+              <span class="duo-checkbox-label">Dinner</span>
             </label>
           </div>
         </div>
         
-        <div class="bg-white rounded-lg p-4">
-          <h3 class="font-semibold text-slate-700 mb-3">Exercise Completed</h3>
-          <label class="flex items-center">
-            <input type="checkbox" id="exercise-check" class="mr-2 text-emerald-600" />
-            <span class="text-sm">Today's workout</span>
+        <!-- Exercise Section -->
+        <div class="bg-gradient-to-br from-emerald-400 to-teal-400 rounded-2xl p-4 shadow-lg transform hover:scale-105 transition-all duration-300">
+          <h3 class="font-black text-white text-lg mb-3">💪 Exercise</h3>
+          <label class="duo-checkbox-container">
+            <input type="checkbox" id="exercise-check" class="duo-checkbox" data-activity="exercise" />
+            <span class="duo-checkbox-visual">
+              <span class="duo-checkbox-icon">🏃‍♂️</span>
+            </span>
+            <span class="duo-checkbox-label">Workout Complete!</span>
           </label>
+          <div class="mt-3 bg-white bg-opacity-20 rounded-lg px-2 py-1 text-white text-xs font-bold">
+            Crush it! 🔥
+          </div>
         </div>
         
-        <div class="bg-white rounded-lg p-4">
-          <h3 class="font-semibold text-slate-700 mb-3">Hydration</h3>
-          <div class="text-2xl text-center">
-            <span id="water-count">0</span> / 8 🥤
+        <!-- Hydration Section -->
+        <div class="bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl p-4 shadow-lg transform hover:scale-105 transition-all duration-300">
+          <h3 class="font-black text-white text-lg mb-3">💧 Hydration</h3>
+          <div class="text-center relative">
+            <div class="text-4xl font-black text-white mb-3">
+              <span id="water-count" class="water-count-animated">0</span>
+              <span class="text-2xl">/8</span>
+            </div>
+            <button onclick="addWater()" class="duo-button bg-white text-blue-500 hover:bg-blue-50 font-black py-2 px-4 rounded-full shadow-lg transform active:scale-95 transition-all duration-150 text-sm">
+              <span class="text-lg">💧</span> Add Glass
+            </button>
+            <div class="water-drops" id="water-drops"></div>
           </div>
-          <button onclick="addWater()" class="w-full mt-2 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded text-sm">
-            Add Glass
-          </button>
+        </div>
+        
+        <!-- Alcohol Free Section -->
+        <div class="bg-gradient-to-br from-purple-400 to-indigo-400 rounded-2xl p-4 shadow-lg transform hover:scale-105 transition-all duration-300">
+          <h3 class="font-black text-white text-lg mb-3">🎉 Alcohol Free</h3>
+          <label class="duo-checkbox-container">
+            <input type="checkbox" id="alcohol-free-check" class="duo-checkbox" data-activity="alcohol-free" />
+            <span class="duo-checkbox-visual">
+              <span class="duo-checkbox-icon">🚫</span>
+            </span>
+            <span class="duo-checkbox-label">Clear Mind Day!</span>
+          </label>
+          <div class="mt-3 bg-white bg-opacity-20 rounded-lg px-2 py-1 text-white text-xs font-bold">
+            Stay strong! 💪
+          </div>
+        </div>
+        
+        <!-- Notes Section -->
+        <div class="bg-gradient-to-br from-pink-400 to-rose-400 rounded-2xl p-4 shadow-lg transform hover:scale-105 transition-all duration-300 md:col-span-2 lg:col-span-2">
+          <h3 class="font-black text-white text-lg mb-3">📝 Daily Reflection</h3>
+          <textarea id="daily-notes" class="w-full p-3 bg-white bg-opacity-90 border-2 border-white rounded-xl text-gray-800 font-medium placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50 transition-all text-sm" rows="2" placeholder="How was your day? What made you smile? 😊"></textarea>
         </div>
       </div>
       
+      <!-- Progress Button -->
       <div class="mt-6 text-center">
-        <a href="/progress" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-medium mr-2 inline-block">
+        <a href="/progress" class="inline-block bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-6 py-3 rounded-full font-black text-base shadow-lg transform hover:scale-105 transition-all duration-300">
           📊 View Progress
         </a>
-        <button onclick="exportToCSV()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">
-          📄 Export CSV
-        </button>
-        <button onclick="syncNow()" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-medium ml-2">
-          ☁️ Sync Now
-        </button>
-        <div id="save-status" class="mt-2 text-sm text-emerald-600">Auto-saving locally ✓</div>
       </div>
+      
     </section>
+    
+    <style>
+      /* Duolingo-style checkbox */
+      .duo-checkbox-container {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-bottom: 6px;
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .duo-checkbox-container:hover {
+        background: rgba(255, 255, 255, 1);
+        transform: translateX(4px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      
+      .duo-checkbox-container:has(.duo-checkbox:checked) {
+        border-color: #10b981;
+        background: rgba(236, 253, 245, 1);
+      }
+      
+      .duo-checkbox {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      
+      .duo-checkbox-visual {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(255, 255, 255, 0.3);
+      }
+      
+      .duo-checkbox-visual::after {
+        content: '✓';
+        position: absolute;
+        font-size: 24px;
+        font-weight: 900;
+        color: #10b981;
+        opacity: 0;
+        transform: scale(0) rotate(-180deg);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .duo-checkbox-icon {
+        font-size: 20px;
+        opacity: 0.6;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      .duo-checkbox:checked ~ .duo-checkbox-visual {
+        background: white;
+        border-color: white;
+        animation: checkBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+      
+      .duo-checkbox:checked ~ .duo-checkbox-visual::after {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+      
+      .duo-checkbox:checked ~ .duo-checkbox-visual .duo-checkbox-icon {
+        opacity: 0.3;
+        transform: scale(0.8);
+      }
+      
+      .duo-checkbox-label {
+        font-weight: 800;
+        font-size: 16px;
+        color: #1f2937;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+      
+      .duo-checkbox:checked ~ .duo-checkbox-label {
+        color: #059669;
+        opacity: 0.8;
+      }
+      
+      @keyframes checkBounce {
+        0% { transform: scale(1); }
+        30% { transform: scale(0.9); }
+        60% { transform: scale(1.3); }
+        100% { transform: scale(1); }
+      }
+      
+      /* Water animation */
+      .water-count-animated {
+        display: inline-block;
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
+      
+      .water-drops {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      
+      .water-drop {
+        position: absolute;
+        font-size: 24px;
+        animation: dropFall 1s ease-out forwards;
+        pointer-events: none;
+      }
+      
+      @keyframes dropFall {
+        0% {
+          transform: translateY(0) scale(0);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-30px) scale(1.2);
+        }
+        100% {
+          transform: translateY(-60px) scale(0);
+          opacity: 0;
+        }
+      }
+      
+      /* Success ripple effect */
+      .success-ripple {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 32px;
+        animation: rippleOut 1s ease-out forwards;
+        pointer-events: none;
+        z-index: 10;
+      }
+      
+      @keyframes rippleOut {
+        0% {
+          transform: translate(-50%, -50%) scale(0);
+          opacity: 1;
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.5);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translate(-50%, -50%) scale(2.5);
+          opacity: 0;
+        }
+      }
+      
+      .celebrate-pulse {
+        animation: pulseCelebrate 0.6s ease-out;
+      }
+      
+      @keyframes pulseCelebrate {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+      }
+      
+      .duo-button:active {
+        animation: buttonPulse 0.3s ease-out;
+      }
+      
+      @keyframes buttonPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(0.95); }
+        100% { transform: scale(1); }
+      }
+      
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .duo-checkbox-container {
+          padding: 10px;
+        }
+        
+        .duo-checkbox-visual {
+          width: 40px;
+          height: 40px;
+        }
+        
+        .duo-checkbox-label {
+          font-size: 16px;
+        }
+      }
+    </style>
 
     {todaysPlan && (
       <div class="grid lg:grid-cols-2 gap-8">
@@ -315,10 +549,60 @@ const todaysQuote = getTodaysQuote();
         const display = document.getElementById('water-count');
         if (display) {
           display.textContent = waterCount.toString();
+          // Animate the number
+          display.style.transform = 'scale(1.5)';
+          setTimeout(() => {
+            display.style.transform = 'scale(1)';
+          }, 300);
         }
+        
+        // Create water drop animation
+        const waterDropsContainer = document.getElementById('water-drops');
+        if (waterDropsContainer) {
+          const drop = document.createElement('div');
+          drop.className = 'water-drop';
+          drop.textContent = '💧';
+          drop.style.left = Math.random() * 80 + 10 + '%';
+          drop.style.bottom = '20px';
+          waterDropsContainer.appendChild(drop);
+          
+          setTimeout(() => drop.remove(), 1000);
+        }
+        
+        // Celebration for reaching goal
+        if (waterCount === 8) {
+          const statusDiv = document.getElementById('save-status');
+          if (statusDiv) {
+            statusDiv.innerHTML = '<span class="text-blue-600 font-black">💧 Hydration Goal Reached! 🎆</span>';
+            setTimeout(() => {
+              statusDiv.innerHTML = '<span class="text-purple-600 font-semibold">Auto-saving your wins! ✨</span>';
+            }, 3000);
+          }
+        }
+        
         // Auto-save locally (water count is stored in the tracking data)
         autoSaveLocally();
       }
+    }
+    
+    // Celebration function with localized effect
+    function celebrate(checkbox, emoji) {
+      // Find the checkbox container
+      const container = checkbox.closest('.duo-checkbox-container');
+      if (!container) return;
+      
+      // Create success ripple effect
+      const ripple = document.createElement('div');
+      ripple.className = 'success-ripple';
+      ripple.textContent = emoji;
+      container.appendChild(ripple);
+      
+      // Remove after animation
+      setTimeout(() => ripple.remove(), 1000);
+      
+      // Quick pulse animation on the container
+      container.classList.add('celebrate-pulse');
+      setTimeout(() => container.classList.remove('celebrate-pulse'), 600);
     }
 
     // Date and unified storage integration
@@ -342,12 +626,67 @@ const todaysQuote = getTodaysQuote();
         console.log('Cloud sync is configured and ready');
       }
 
-      // Add event listeners for auto-save
-      const checkboxes = document.querySelectorAll('#breakfast-check, #lunch-check, #dinner-check, #exercise-check');
+      // Add event listeners for auto-save and celebrations
+      const checkboxes = document.querySelectorAll('.duo-checkbox');
       checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', autoSaveLocally);
+        checkbox.addEventListener('change', function(e) {
+          autoSaveLocally();
+          
+          // Celebrate when checking (not unchecking)
+          if (e.target.checked) {
+            const activityType = e.target.dataset.meal || e.target.dataset.activity;
+            
+            // Different celebration emojis for different activities
+            switch(activityType) {
+              case 'breakfast':
+                celebrate(e.target, '✨');
+                break;
+              case 'lunch':
+                celebrate(e.target, '🎆');
+                break;
+              case 'dinner':
+                celebrate(e.target, '🌟');
+                break;
+              case 'exercise':
+                celebrate(e.target, '🔥');
+                break;
+              case 'alcohol-free':
+                celebrate(e.target, '💪');
+                break;
+            }
+            
+            // Check if all daily goals are complete
+            checkAllGoalsComplete();
+          }
+        });
       });
+      
+      // Add event listener for notes
+      const notesField = document.getElementById('daily-notes');
+      if (notesField) {
+        notesField.addEventListener('blur', autoSaveLocally);
+      }
     });
+    
+    // Check if all daily goals are complete
+    function checkAllGoalsComplete() {
+      const breakfast = document.getElementById('breakfast-check')?.checked;
+      const lunch = document.getElementById('lunch-check')?.checked;
+      const dinner = document.getElementById('dinner-check')?.checked;
+      const exercise = document.getElementById('exercise-check')?.checked;
+      const hydration = waterCount >= 8;
+      
+      if (breakfast && lunch && dinner && exercise && hydration) {
+        // Show perfect day message in status
+        const statusDiv = document.getElementById('save-status');
+        if (statusDiv) {
+          statusDiv.innerHTML = '<span class="text-purple-600 font-black">🏆 PERFECT DAY! All goals crushed! 🏆</span>';
+          setTimeout(() => {
+            statusDiv.innerHTML = '<span class="text-purple-600 font-semibold">Auto-saving your wins! ✨</span>';
+          }, 5000);
+        }
+      }
+    }
 
     // Date navigation functions
     function changeDate(days) {
@@ -406,7 +745,7 @@ const todaysQuote = getTodaysQuote();
     async function loadDataForDate() {
       if (!tracker) return;
 
-      // Load data using the unified tracker (syncs from Google Sheets if available)
+      // Load data using the unified tracker (syncs from cloud if available)
       await loadCurrentTrackingState(tracker, currentDate);
       
       // Update local water count from what was loaded
@@ -414,9 +753,20 @@ const todaysQuote = getTodaysQuote();
       if (waterDisplay) {
         waterCount = parseInt(waterDisplay.textContent || '0');
       }
+      
+      // Update the save status to show which date we're viewing
+      const statusDiv = document.getElementById('save-status');
+      if (statusDiv) {
+        const dateStr = currentDate.toLocaleDateString('en-US', { 
+          month: 'short', 
+          day: 'numeric',
+          year: currentDate.getFullYear() !== new Date().getFullYear() ? 'numeric' : undefined
+        });
+        statusDiv.innerHTML = `<span class="text-purple-600 font-semibold">Viewing ${dateStr} ✨</span>`;
+      }
     }
 
-    // Auto-save function (now saves to both local and Google Sheets)
+    // Auto-save function (saves to local and cloud storage)
     async function autoSaveLocally() {
       if (!tracker) return;
       

@@ -6,6 +6,7 @@ export interface TrackingData {
   dinner: boolean;
   exercise: boolean;
   waterGlasses: number;
+  alcoholFree?: boolean;
   notes?: string;
 }
 

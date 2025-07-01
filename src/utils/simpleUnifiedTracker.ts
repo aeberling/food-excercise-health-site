@@ -58,6 +58,13 @@ export class SimpleUnifiedTracker {
   }
 
   /**
+   * Alias for getAllTrackingData for backward compatibility
+   */
+  getAllData(): Record<string, TrackingData> {
+    return this.getAllTrackingData();
+  }
+
+  /**
    * Export data as CSV
    */
   exportToCSV(): string {
@@ -196,6 +203,8 @@ export async function saveCurrentTrackingState(tracker: SimpleUnifiedTracker, da
   const lunch = (document.querySelector('#lunch-check') as HTMLInputElement)?.checked || false;
   const dinner = (document.querySelector('#dinner-check') as HTMLInputElement)?.checked || false;
   const exercise = (document.querySelector('#exercise-check') as HTMLInputElement)?.checked || false;
+  const alcoholFree = (document.querySelector('#alcohol-free-check') as HTMLInputElement)?.checked || false;
+  const notes = (document.querySelector('#daily-notes') as HTMLTextAreaElement)?.value || '';
   
   const waterDisplay = document.getElementById('water-count');
   const waterGlasses = parseInt(waterDisplay?.textContent || '0');
@@ -207,7 +216,8 @@ export async function saveCurrentTrackingState(tracker: SimpleUnifiedTracker, da
     dinner,
     exercise,
     waterGlasses,
-    notes: `Mediterranean Diet Day - Week ${Math.ceil((date.getDay() + 1) / 7)}`
+    alcoholFree,
+    notes: notes || `Mediterranean Diet Day - Week ${Math.ceil((date.getDay() + 1) / 7)}`
   };
 
   return await tracker.saveTrackingData(trackingData);
@@ -217,17 +227,32 @@ export async function loadCurrentTrackingState(tracker: SimpleUnifiedTracker, da
   const dateString = toLocalDateString(date);
   const data = tracker.getTrackingData(dateString);
   
+  // Get all the form elements
+  const breakfastCheck = document.querySelector('#breakfast-check') as HTMLInputElement;
+  const lunchCheck = document.querySelector('#lunch-check') as HTMLInputElement;
+  const dinnerCheck = document.querySelector('#dinner-check') as HTMLInputElement;
+  const exerciseCheck = document.querySelector('#exercise-check') as HTMLInputElement;
+  const alcoholFreeCheck = document.querySelector('#alcohol-free-check') as HTMLInputElement;
+  const notesField = document.querySelector('#daily-notes') as HTMLTextAreaElement;
+  const waterDisplay = document.getElementById('water-count');
+  
   if (data) {
-    const breakfastCheck = document.querySelector('#breakfast-check') as HTMLInputElement;
-    const lunchCheck = document.querySelector('#lunch-check') as HTMLInputElement;
-    const dinnerCheck = document.querySelector('#dinner-check') as HTMLInputElement;
-    const exerciseCheck = document.querySelector('#exercise-check') as HTMLInputElement;
-    const waterDisplay = document.getElementById('water-count');
-
+    // Load existing data
     if (breakfastCheck) breakfastCheck.checked = data.breakfast;
     if (lunchCheck) lunchCheck.checked = data.lunch;
     if (dinnerCheck) dinnerCheck.checked = data.dinner;
     if (exerciseCheck) exerciseCheck.checked = data.exercise;
+    if (alcoholFreeCheck) alcoholFreeCheck.checked = data.alcoholFree || false;
+    if (notesField) notesField.value = data.notes || '';
     if (waterDisplay) waterDisplay.textContent = data.waterGlasses.toString();
+  } else {
+    // Clear all fields when no data exists for this date
+    if (breakfastCheck) breakfastCheck.checked = false;
+    if (lunchCheck) lunchCheck.checked = false;
+    if (dinnerCheck) dinnerCheck.checked = false;
+    if (exerciseCheck) exerciseCheck.checked = false;
+    if (alcoholFreeCheck) alcoholFreeCheck.checked = false;
+    if (notesField) notesField.value = '';
+    if (waterDisplay) waterDisplay.textContent = '0';
   }
 }

@@ -6,6 +6,7 @@ export interface TrackingData {
   dinner: boolean;
   exercise: boolean;
   waterGlasses: number;
+  alcoholFree?: boolean;
   notes?: string;
 }
 
@@ -55,13 +56,13 @@ export class LocalTracker {
   }
 
   /**
-   * Export data as CSV for manual import to Google Sheets
+   * Export data as CSV
    */
   exportAsCSV(): string {
     const data = this.getAllData();
     const entries = Object.values(data).sort((a, b) => a.date.localeCompare(b.date));
     
-    const headers = ['Date', 'Breakfast', 'Lunch', 'Dinner', 'Exercise', 'Water Glasses', 'Notes'];
+    const headers = ['Date', 'Breakfast', 'Lunch', 'Dinner', 'Exercise', 'Water Glasses', 'Alcohol Free', 'Notes'];
     const rows = entries.map(entry => [
       entry.date,
       entry.breakfast ? 'TRUE' : 'FALSE',
@@ -69,6 +70,7 @@ export class LocalTracker {
       entry.dinner ? 'TRUE' : 'FALSE',
       entry.exercise ? 'TRUE' : 'FALSE',
       entry.waterGlasses.toString(),
+      entry.alcoholFree ? 'TRUE' : 'FALSE',
       entry.notes || ''
     ]);
 
@@ -108,6 +110,7 @@ export class LocalTracker {
     dinnerCompleted: number;
     exerciseCompleted: number;
     averageWater: number;
+    alcoholFreeDays: number;
   } {
     const data = Object.values(this.getAllData());
     
@@ -117,7 +120,8 @@ export class LocalTracker {
       lunchCompleted: data.filter(d => d.lunch).length,
       dinnerCompleted: data.filter(d => d.dinner).length,
       exerciseCompleted: data.filter(d => d.exercise).length,
-      averageWater: data.length > 0 ? Math.round(data.reduce((sum, d) => sum + d.waterGlasses, 0) / data.length) : 0
+      averageWater: data.length > 0 ? Math.round(data.reduce((sum, d) => sum + d.waterGlasses, 0) / data.length) : 0,
+      alcoholFreeDays: data.filter(d => d.alcoholFree).length
     };
   }
 }
@@ -131,7 +135,9 @@ export function saveCurrentTrackingState(): boolean {
   const lunch = document.querySelector<HTMLInputElement>('#lunch-check')?.checked || false;
   const dinner = document.querySelector<HTMLInputElement>('#dinner-check')?.checked || false;
   const exercise = document.querySelector<HTMLInputElement>('#exercise-check')?.checked || false;
+  const alcoholFree = document.querySelector<HTMLInputElement>('#alcohol-free-check')?.checked || false;
   const waterGlasses = parseInt(localStorage.getItem('waterCount') || '0');
+  const notes = document.querySelector<HTMLTextAreaElement>('#daily-notes')?.value || '';
 
   const trackingData: TrackingData = {
     date: today,
@@ -140,7 +146,8 @@ export function saveCurrentTrackingState(): boolean {
     dinner,
     exercise,
     waterGlasses,
-    notes: `Mediterranean Diet Day - Week ${Math.floor(Date.now() / (1000 * 60 * 60 * 24 * 7)) % 2 + 1}`
+    alcoholFree,
+    notes: notes || `Mediterranean Diet Day - Week ${Math.floor(Date.now() / (1000 * 60 * 60 * 24 * 7)) % 2 + 1}`
   };
 
   return tracker.saveTrackingData(trackingData);
@@ -157,12 +164,16 @@ export function loadCurrentTrackingState(): void {
     const lunchCheck = document.querySelector<HTMLInputElement>('#lunch-check');
     const dinnerCheck = document.querySelector<HTMLInputElement>('#dinner-check');
     const exerciseCheck = document.querySelector<HTMLInputElement>('#exercise-check');
+    const alcoholFreeCheck = document.querySelector<HTMLInputElement>('#alcohol-free-check');
+    const notesField = document.querySelector<HTMLTextAreaElement>('#daily-notes');
     const waterDisplay = document.getElementById('water-count');
 
     if (breakfastCheck) breakfastCheck.checked = data.breakfast;
     if (lunchCheck) lunchCheck.checked = data.lunch;
     if (dinnerCheck) dinnerCheck.checked = data.dinner;
     if (exerciseCheck) exerciseCheck.checked = data.exercise;
+    if (alcoholFreeCheck) alcoholFreeCheck.checked = data.alcoholFree || false;
+    if (notesField) notesField.value = data.notes || '';
     
     // Update water count
     if (waterDisplay) {
