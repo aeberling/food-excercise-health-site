@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import RecipeCard from '../components/RecipeCard.astro';
+import { recipes } from '../data/recipes';
 ---
 
 <Layout title="Mediterranean Power Plan - Recipes">
@@ -14,323 +15,205 @@ import RecipeCard from '../components/RecipeCard.astro';
         High-protein Mediterranean recipes optimized for active adults. Each recipe includes detailed nutritional information, 
         cooking instructions, and pro tips for meal prep.
       </p>
+      <p class="text-emerald-600 font-medium mt-4">{recipes.length} recipes available</p>
     </header>
 
-    <!-- Recipe Categories -->
-    <div class="grid gap-8">
+    <!-- Filter Controls -->
+    <div class="bg-white rounded-xl shadow-md p-6 mb-8 border border-emerald-100">
+      <h2 class="text-lg font-semibold text-emerald-700 mb-4">Filter Recipes</h2>
       
-      <!-- Breakfast Recipes -->
-      <section class="page-break-before">
-        <h2 class="text-3xl font-bold text-emerald-700 mb-6 border-b-2 border-emerald-200 pb-2">
-          🍳 Breakfast Recipes
-        </h2>
-        
-        <RecipeCard
-          id="greek-yogurt-power-bowl"
-          title="Greek Yogurt Power Bowl"
-          protein="30g"
-          prepTime="5 minutes"
-          ingredients={[
-            "1½ cups plain Greek yogurt (0% or 2% fat)",
-            "1 hard-boiled egg, chopped",
-            "½ cup cooked chickpeas, drained and rinsed",
-            "¼ cup diced cucumber",
-            "¼ cup cherry tomatoes, halved",
-            "2 tablespoons mixed nuts (almonds, walnuts)",
-            "1 tablespoon extra virgin olive oil",
-            "1 teaspoon za'atar or dukkah",
-            "Salt and pepper to taste",
-            "Fresh lemon juice (optional)"
-          ]}
-          instructions={[
-            "Add Greek yogurt to a large bowl and spread evenly.",
-            "Top with chopped hard-boiled egg and chickpeas.",
-            "Add cucumber, tomatoes, and mixed nuts.",
-            "Drizzle with olive oil and sprinkle with za'atar.",
-            "Season with salt, pepper, and a squeeze of lemon if desired.",
-            "Serve immediately or cover and refrigerate overnight for meal prep."
-          ]}
-          tips={[
-            "Prepare components ahead of time for quick assembly",
-            "Use full-fat Greek yogurt for extra satiety",
-            "Add a scoop of protein powder for 45g+ protein total"
-          ]}
-        />
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Meal Type Filters -->
+        <div>
+          <h3 class="text-sm font-medium text-slate-700 mb-3">Meal Type</h3>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="filterByCategory('all')" class="filter-btn category-filter bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-emerald-700" data-category="all">
+              All Meals
+            </button>
+            <button onclick="filterByCategory('breakfast')" class="filter-btn category-filter bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-300" data-category="breakfast">
+              Breakfast
+            </button>
+            <button onclick="filterByCategory('lunch')" class="filter-btn category-filter bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-300" data-category="lunch">
+              Lunch
+            </button>
+            <button onclick="filterByCategory('dinner')" class="filter-btn category-filter bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-300" data-category="dinner">
+              Dinner
+            </button>
+            <button onclick="filterByCategory('snack')" class="filter-btn category-filter bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-300" data-category="snack">
+              Snacks
+            </button>
+          </div>
+        </div>
 
-        <RecipeCard
-          id="mediterranean-egg-muffins"
-          title="Mediterranean Egg Muffins"
-          protein="12g per muffin"
-          prepTime="15 minutes"
-          cookTime="20-25 minutes"
-          serves="12 muffins"
-          referenceLink="https://www.themediterraneandish.com/mediterranean-breakfast-egg-muffins/"
-          referenceName="The Mediterranean Dish - Egg Muffins"
-          ingredients={[
-            "12 large eggs",
-            "1 cup fresh spinach, chopped",
-            "½ cup sun-dried tomatoes, chopped",
-            "½ cup red bell pepper, diced",
-            "⅓ cup red onion, finely diced",
-            "¾ cup feta cheese, crumbled",
-            "2 tablespoons fresh parsley, chopped",
-            "1 teaspoon dried oregano",
-            "½ teaspoon garlic powder",
-            "Salt and pepper to taste",
-            "Olive oil for greasing"
-          ]}
-          instructions={[
-            "Preheat oven to 350°F (175°C). Grease a 12-cup muffin tin with olive oil.",
-            "In a large bowl, whisk eggs until well combined.",
-            "Add spinach, sun-dried tomatoes, bell pepper, onion, oregano, garlic powder, salt, and pepper. Mix well.",
-            "Divide mixture evenly among muffin cups, filling about ¾ full.",
-            "Top each with crumbled feta and parsley.",
-            "Bake for 20-25 minutes until eggs are set and tops are lightly golden.",
-            "Cool for 5 minutes before removing from tin."
-          ]}
-          tips={[
-            "Refrigerate up to 5 days in airtight container",
-            "Freeze individually wrapped for up to 3 months",
-            "Reheat in microwave for 30-60 seconds or oven at 350°F for 5 minutes"
-          ]}
-        />
+        <!-- Cooking Method Filters -->
+        <div>
+          <h3 class="text-sm font-medium text-slate-700 mb-3">Cooking Method</h3>
+          <div class="flex flex-wrap gap-2">
+            <button onclick="filterByMethod('all')" class="filter-btn method-filter bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-emerald-700" data-method="all">
+              All Methods
+            </button>
+            <button onclick="filterByMethod('air-fryer')" class="filter-btn method-filter bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-300" data-method="air-fryer">
+              Air Fryer
+            </button>
+            <button onclick="filterByMethod('instant-pot')" class="filter-btn method-filter bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-300" data-method="instant-pot">
+              Instant Pot
+            </button>
+            <button onclick="filterByMethod('crock-pot')" class="filter-btn method-filter bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-300" data-method="crock-pot">
+              Crock Pot
+            </button>
+            <button onclick="filterByMethod('pan-cook')" class="filter-btn method-filter bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-300" data-method="pan-cook">
+              Pan Cook
+            </button>
+            <button onclick="filterByMethod('oven')" class="filter-btn method-filter bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-300" data-method="oven">
+              Oven
+            </button>
+            <button onclick="filterByMethod('no-cook')" class="filter-btn method-filter bg-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors hover:bg-slate-300" data-method="no-cook">
+              No Cook
+            </button>
+          </div>
+        </div>
+      </div>
 
-        <RecipeCard
-          id="shakshuka"
-          title="Power Shakshuka"
-          protein="25g"
-          prepTime="10 minutes"
-          cookTime="25 minutes"
-          serves="2"
-          referenceLink="https://www.themediterraneandish.com/shakshuka-recipe/"
-          referenceName="The Mediterranean Dish - Shakshuka"
-          ingredients={[
-            "2 tablespoons extra virgin olive oil",
-            "1 medium onion, diced",
-            "1 red bell pepper, diced",
-            "4 garlic cloves, minced",
-            "1 teaspoon ground cumin",
-            "1 teaspoon sweet paprika",
-            "¼ teaspoon cayenne pepper",
-            "1 (28 oz) can crushed tomatoes",
-            "½ teaspoon salt",
-            "¼ teaspoon black pepper",
-            "6 large eggs",
-            "½ cup feta cheese, crumbled",
-            "¼ cup Greek yogurt for serving",
-            "Fresh parsley for garnish"
-          ]}
-          instructions={[
-            "Heat olive oil in a large cast iron skillet or wide pan over medium heat.",
-            "Add onion and bell pepper, cook for 5 minutes until softened.",
-            "Add garlic, cumin, paprika, and cayenne. Cook for 1 minute until fragrant.",
-            "Add crushed tomatoes, salt, and pepper. Simmer for 10-15 minutes until sauce thickens.",
-            "Create 6 wells in the sauce and crack eggs into each well.",
-            "Sprinkle feta around the eggs and cover pan.",
-            "Cook for 10-15 minutes until egg whites are set but yolks are still runny.",
-            "Garnish with parsley and serve with dollops of Greek yogurt."
-          ]}
-          tips={[
-            "Prepare sauce up to 3 days ahead",
-            "Store in refrigerator and reheat before adding eggs",
-            "Serve with whole grain pita for extra carbs"
-          ]}
-        />
-      </section>
-
-      <!-- Air Fryer Recipes -->
-      <section class="page-break-before">
-        <h2 class="text-3xl font-bold text-emerald-700 mb-6 border-b-2 border-emerald-200 pb-2">
-          🔥 Air Fryer Recipes
-        </h2>
-        
-        <RecipeCard
-          id="air-fryer-chicken"
-          title="Crispy Mediterranean Air Fryer Chicken Thighs"
-          protein="27g per serving"
-          prepTime="15 minutes (+ 2 hours marinating)"
-          cookTime="18 minutes"
-          serves="4"
-          referenceLink="https://www.theroastedroot.net/crispy-mediterranean-air-fryer-chicken-thighs/"
-          referenceName="The Roasted Root - Air Fryer Chicken"
-          ingredients={[
-            "8 bone-in, skin-on chicken thighs",
-            "3 tablespoons extra virgin olive oil",
-            "2 lemons (juiced and zested)",
-            "4 garlic cloves, minced",
-            "2 teaspoons ground sumac",
-            "1 teaspoon ground cumin",
-            "1 teaspoon sweet paprika",
-            "½ teaspoon ground cinnamon",
-            "½ teaspoon allspice",
-            "1 teaspoon salt",
-            "½ teaspoon black pepper",
-            "Fresh oregano for garnish"
-          ]}
-          instructions={[
-            "Pat chicken thighs dry and place in a large bowl.",
-            "Whisk together olive oil, lemon juice, lemon zest, garlic, and all spices.",
-            "Pour marinade over chicken, ensuring all pieces are coated.",
-            "Marinate for at least 2 hours or overnight in refrigerator.",
-            "Preheat air fryer to 375°F (190°C).",
-            "Remove chicken from marinade and place in air fryer basket, skin-side down.",
-            "Cook for 12 minutes, then flip and cook for 6-8 more minutes.",
-            "Check internal temperature reaches 165°F (74°C).",
-            "Let rest for 5 minutes before serving, garnish with fresh oregano."
-          ]}
-          tips={[
-            "Stores in refrigerator for 1 week",
-            "Marinate up to 24 hours ahead",
-            "Reheat at 350°F for 3-5 minutes to maintain crispiness"
-          ]}
-        />
-
-        <RecipeCard
-          id="air-fryer-salmon"
-          title="Air Fryer Mediterranean Salmon"
-          protein="34g per serving"
-          prepTime="10 minutes"
-          cookTime="7-10 minutes"
-          serves="4"
-          referenceLink="https://www.themediterraneandish.com/air-fryer-salmon/"
-          referenceName="The Mediterranean Dish - Air Fryer Salmon"
-          ingredients={[
-            "4 salmon fillets (6 oz each), skin removed",
-            "3 tablespoons extra virgin olive oil",
-            "2 lemons (juiced and zested)",
-            "3 garlic cloves, minced",
-            "2 teaspoons dried oregano",
-            "1 teaspoon sweet paprika",
-            "1 teaspoon garlic powder",
-            "¾ teaspoon salt",
-            "½ teaspoon black pepper",
-            "¼ teaspoon red pepper flakes",
-            "Fresh parsley for garnish",
-            "Lemon wedges for serving"
-          ]}
-          instructions={[
-            "Pat salmon fillets dry with paper towels.",
-            "In a small bowl, mix olive oil, lemon juice, lemon zest, and minced garlic.",
-            "In another bowl, combine oregano, paprika, garlic powder, salt, pepper, and red pepper flakes.",
-            "Brush salmon with the oil mixture, then season with spice blend.",
-            "Preheat air fryer to 400°F (200°C).",
-            "Place salmon in air fryer basket, ensuring pieces don't overlap.",
-            "Cook for 7-10 minutes depending on thickness (internal temp should reach 145°F/63°C).",
-            "Let rest for 2 minutes, then garnish with parsley and serve with lemon wedges."
-          ]}
-          tips={[
-            "1-inch thick: 7-8 minutes",
-            "1.5-inch thick: 9-10 minutes",
-            "Use garlic powder instead of fresh to prevent burning"
-          ]}
-        />
-      </section>
-
-      <!-- Instant Pot Recipes -->
-      <section class="page-break-before">
-        <h2 class="text-3xl font-bold text-emerald-700 mb-6 border-b-2 border-emerald-200 pb-2">
-          ⚡ Instant Pot Recipes
-        </h2>
-        
-        <RecipeCard
-          id="instant-pot-lentil-soup"
-          title="Mediterranean Instant Pot Lentil Soup"
-          protein="18g per serving"
-          prepTime="15 minutes"
-          cookTime="25 minutes"
-          serves="6-8"
-          referenceLink="https://www.cookwithmanali.com/instant-pot-mediterranean-lentil-soup/"
-          referenceName="Cook With Manali - Mediterranean Lentil Soup"
-          ingredients={[
-            "2 tablespoons extra virgin olive oil",
-            "1 large onion, diced",
-            "3 garlic cloves, minced",
-            "1 tablespoon fresh ginger, grated",
-            "1 (14.5 oz) can diced tomatoes with juice",
-            "1½ cups red lentils, rinsed",
-            "4 cups vegetable or chicken broth",
-            "2 large carrots, diced",
-            "2 teaspoons ground cumin",
-            "1 teaspoon ground coriander",
-            "1 teaspoon turmeric",
-            "½ teaspoon smoked paprika",
-            "1 teaspoon salt (or to taste)",
-            "½ teaspoon black pepper",
-            "2 cups fresh spinach",
-            "2 tablespoons lemon juice",
-            "Fresh cilantro for garnish"
-          ]}
-          instructions={[
-            "Set Instant Pot to \"Sauté\" mode and heat olive oil.",
-            "Add onions and cook for 3-4 minutes until translucent.",
-            "Add garlic and ginger, cook for 1 minute until fragrant.",
-            "Add diced tomatoes with juice and deglaze the pot, scraping up any browned bits.",
-            "Add rinsed lentils, broth, carrots, cumin, coriander, turmeric, paprika, salt, and pepper.",
-            "Turn Instant Pot to \"off\" and secure the lid with valve in sealing position.",
-            "Pressure cook on high for 25 minutes.",
-            "Allow natural pressure release for 10 minutes, then quick release remaining pressure.",
-            "Stir in spinach and lemon juice until spinach wilts.",
-            "Taste and adjust seasoning. Serve hot garnished with fresh cilantro."
-          ]}
-          tips={[
-            "Refrigerate for up to 5 days",
-            "Freeze for up to 4 months",
-            "Add extra broth when reheating as lentils absorb liquid"
-          ]}
-        />
-
-        <RecipeCard
-          id="instant-pot-beef-stew"
-          title="Mediterranean Instant Pot Beef Stew"
-          protein="25g per serving"
-          prepTime="20 minutes"
-          cookTime="45 minutes"
-          serves="6-8"
-          ingredients={[
-            "3 lbs beef chuck roast, cut into 2-inch cubes",
-            "2 tablespoons extra virgin olive oil",
-            "1 large onion, diced",
-            "4 garlic cloves, minced",
-            "2 tablespoons tomato paste",
-            "1 cup red wine (optional, or use more broth)",
-            "2 cups beef broth",
-            "1 (14.5 oz) can diced tomatoes",
-            "3 large carrots, cut into chunks",
-            "1 lb small potatoes, halved",
-            "2 teaspoons dried oregano",
-            "1 teaspoon dried rosemary",
-            "2 bay leaves",
-            "1 teaspoon salt",
-            "½ teaspoon black pepper",
-            "¼ cup kalamata olives",
-            "Fresh parsley for garnish"
-          ]}
-          instructions={[
-            "Season beef cubes with salt and pepper.",
-            "Set Instant Pot to \"Sauté\" and heat olive oil.",
-            "Brown beef in batches, about 3-4 minutes per side. Remove and set aside.",
-            "Add onion to pot and sauté for 3-4 minutes until softened.",
-            "Add garlic and tomato paste, cook for 1 minute.",
-            "Add wine (if using) and scrape up any browned bits.",
-            "Return beef to pot with broth, diced tomatoes, oregano, rosemary, and bay leaves.",
-            "Secure lid and pressure cook on high for 35 minutes.",
-            "Quick release pressure, then add carrots and potatoes.",
-            "Pressure cook for another 5 minutes, then quick release.",
-            "Stir in olives and let rest for 5 minutes.",
-            "Remove bay leaves and garnish with fresh parsley before serving."
-          ]}
-          tips={[
-            "Serve over quinoa, rice, or polenta",
-            "Freezes well for up to 4 months",
-            "Add fresh lemon juice just before serving for brightness"
-          ]}
-        />
-      </section>
+      <div class="mt-4 text-center">
+        <button onclick="clearFilters()" class="text-emerald-600 hover:text-emerald-700 text-sm font-medium">
+          Clear All Filters
+        </button>
+        <span id="recipe-count" class="ml-4 text-sm text-slate-600"></span>
+      </div>
     </div>
 
-    <!-- Print note -->
-    <div class="mt-12 text-center text-slate-600 font-sans">
-      <p class="text-sm">🖨️ These recipes are optimized for printing - each recipe will print cleanly on separate pages!</p>
+    <!-- Recipe Grid -->
+    <div id="recipe-container">
+      {recipes.map(recipe => (
+        <div class="recipe-item" data-category={recipe.category} data-method={recipe.cookingMethod}>
+          <RecipeCard
+            id={recipe.id}
+            title={recipe.title}
+            protein={recipe.protein}
+            prepTime={recipe.prepTime}
+            cookTime={recipe.cookTime}
+            serves={recipe.serves}
+            referenceLink={recipe.referenceLink}
+            referenceName={recipe.referenceName}
+            ingredients={recipe.ingredients}
+            instructions={recipe.instructions}
+            tips={recipe.tips}
+          />
+        </div>
+      ))}
+    </div>
+
+    <!-- No Results Message -->
+    <div id="no-results" class="hidden text-center py-12">
+      <div class="text-slate-400 mb-4">
+        <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+      <h3 class="text-xl font-semibold text-slate-600 mb-2">No recipes found</h3>
+      <p class="text-slate-500">Try adjusting your filters to see more recipes.</p>
     </div>
   </main>
+
+  <script>
+    let currentCategoryFilter = 'all';
+    let currentMethodFilter = 'all';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      updateRecipeCount();
+    });
+
+    function filterByCategory(category) {
+      currentCategoryFilter = category;
+      updateActiveButton('.category-filter', category);
+      applyFilters();
+    }
+
+    function filterByMethod(method) {
+      currentMethodFilter = method;
+      updateActiveButton('.method-filter', method);
+      applyFilters();
+    }
+
+    function updateActiveButton(selector, activeValue) {
+      // Reset all buttons in this group
+      document.querySelectorAll(selector).forEach(btn => {
+        btn.classList.remove('bg-emerald-600', 'text-white');
+        btn.classList.add('bg-slate-200', 'text-slate-700');
+      });
+
+      // Activate the selected button
+      const activeBtn = document.querySelector(`${selector}[data-${selector.includes('category') ? 'category' : 'method'}="${activeValue}"]`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-slate-200', 'text-slate-700');
+        activeBtn.classList.add('bg-emerald-600', 'text-white');
+      }
+    }
+
+    function applyFilters() {
+      const recipes = document.querySelectorAll('.recipe-item');
+      let visibleCount = 0;
+
+      recipes.forEach(recipe => {
+        const recipeCategory = recipe.dataset.category;
+        const recipeMethod = recipe.dataset.method;
+        
+        const categoryMatch = currentCategoryFilter === 'all' || recipeCategory === currentCategoryFilter;
+        const methodMatch = currentMethodFilter === 'all' || recipeMethod === currentMethodFilter;
+        
+        if (categoryMatch && methodMatch) {
+          recipe.style.display = 'block';
+          visibleCount++;
+        } else {
+          recipe.style.display = 'none';
+        }
+      });
+
+      updateRecipeCount();
+      toggleNoResults(visibleCount === 0);
+    }
+
+    function clearFilters() {
+      currentCategoryFilter = 'all';
+      currentMethodFilter = 'all';
+      
+      updateActiveButton('.category-filter', 'all');
+      updateActiveButton('.method-filter', 'all');
+      
+      document.querySelectorAll('.recipe-item').forEach(recipe => {
+        recipe.style.display = 'block';
+      });
+      
+      updateRecipeCount();
+      toggleNoResults(false);
+    }
+
+    function updateRecipeCount() {
+      const visibleRecipes = document.querySelectorAll('.recipe-item[style*="display: block"], .recipe-item:not([style*="display: none"])').length;
+      const totalRecipes = document.querySelectorAll('.recipe-item').length;
+      
+      document.getElementById('recipe-count').textContent = 
+        currentCategoryFilter === 'all' && currentMethodFilter === 'all' 
+          ? `Showing all ${totalRecipes} recipes`
+          : `Showing ${visibleRecipes} of ${totalRecipes} recipes`;
+    }
+
+    function toggleNoResults(show) {
+      const noResults = document.getElementById('no-results');
+      const container = document.getElementById('recipe-container');
+      
+      if (show) {
+        noResults.classList.remove('hidden');
+        container.style.display = 'none';
+      } else {
+        noResults.classList.add('hidden');
+        container.style.display = 'block';
+      }
+    }
+
+    // Make functions globally available
+    window.filterByCategory = filterByCategory;
+    window.filterByMethod = filterByMethod;
+    window.clearFilters = clearFilters;
+  </script>
 </Layout>

@@ -1,0 +1,336 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import RecipeCard from '../components/RecipeCard.astro';
+---
+
+<Layout title="Mediterranean Power Plan - Recipes">
+  <Navigation />
+  
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <header class="text-center mb-8">
+      <h1 class="text-4xl font-bold text-emerald-700 mb-4">Mediterranean Recipes</h1>
+      <p class="text-lg text-slate-600 font-sans max-w-3xl mx-auto">
+        High-protein Mediterranean recipes optimized for active adults. Each recipe includes detailed nutritional information, 
+        cooking instructions, and pro tips for meal prep.
+      </p>
+    </header>
+
+    <!-- Recipe Categories -->
+    <div class="grid gap-8">
+      
+      <!-- Breakfast Recipes -->
+      <section class="page-break-before">
+        <h2 class="text-3xl font-bold text-emerald-700 mb-6 border-b-2 border-emerald-200 pb-2">
+          🍳 Breakfast Recipes
+        </h2>
+        
+        <RecipeCard
+          id="greek-yogurt-power-bowl"
+          title="Greek Yogurt Power Bowl"
+          protein="30g"
+          prepTime="5 minutes"
+          ingredients={[
+            "1½ cups plain Greek yogurt (0% or 2% fat)",
+            "1 hard-boiled egg, chopped",
+            "½ cup cooked chickpeas, drained and rinsed",
+            "¼ cup diced cucumber",
+            "¼ cup cherry tomatoes, halved",
+            "2 tablespoons mixed nuts (almonds, walnuts)",
+            "1 tablespoon extra virgin olive oil",
+            "1 teaspoon za'atar or dukkah",
+            "Salt and pepper to taste",
+            "Fresh lemon juice (optional)"
+          ]}
+          instructions={[
+            "Add Greek yogurt to a large bowl and spread evenly.",
+            "Top with chopped hard-boiled egg and chickpeas.",
+            "Add cucumber, tomatoes, and mixed nuts.",
+            "Drizzle with olive oil and sprinkle with za'atar.",
+            "Season with salt, pepper, and a squeeze of lemon if desired.",
+            "Serve immediately or cover and refrigerate overnight for meal prep."
+          ]}
+          tips={[
+            "Prepare components ahead of time for quick assembly",
+            "Use full-fat Greek yogurt for extra satiety",
+            "Add a scoop of protein powder for 45g+ protein total"
+          ]}
+        />
+
+        <RecipeCard
+          id="mediterranean-egg-muffins"
+          title="Mediterranean Egg Muffins"
+          protein="12g per muffin"
+          prepTime="15 minutes"
+          cookTime="20-25 minutes"
+          serves="12 muffins"
+          referenceLink="https://www.themediterraneandish.com/mediterranean-breakfast-egg-muffins/"
+          referenceName="The Mediterranean Dish - Egg Muffins"
+          ingredients={[
+            "12 large eggs",
+            "1 cup fresh spinach, chopped",
+            "½ cup sun-dried tomatoes, chopped",
+            "½ cup red bell pepper, diced",
+            "⅓ cup red onion, finely diced",
+            "¾ cup feta cheese, crumbled",
+            "2 tablespoons fresh parsley, chopped",
+            "1 teaspoon dried oregano",
+            "½ teaspoon garlic powder",
+            "Salt and pepper to taste",
+            "Olive oil for greasing"
+          ]}
+          instructions={[
+            "Preheat oven to 350°F (175°C). Grease a 12-cup muffin tin with olive oil.",
+            "In a large bowl, whisk eggs until well combined.",
+            "Add spinach, sun-dried tomatoes, bell pepper, onion, oregano, garlic powder, salt, and pepper. Mix well.",
+            "Divide mixture evenly among muffin cups, filling about ¾ full.",
+            "Top each with crumbled feta and parsley.",
+            "Bake for 20-25 minutes until eggs are set and tops are lightly golden.",
+            "Cool for 5 minutes before removing from tin."
+          ]}
+          tips={[
+            "Refrigerate up to 5 days in airtight container",
+            "Freeze individually wrapped for up to 3 months",
+            "Reheat in microwave for 30-60 seconds or oven at 350°F for 5 minutes"
+          ]}
+        />
+
+        <RecipeCard
+          id="shakshuka"
+          title="Power Shakshuka"
+          protein="25g"
+          prepTime="10 minutes"
+          cookTime="25 minutes"
+          serves="2"
+          referenceLink="https://www.themediterraneandish.com/shakshuka-recipe/"
+          referenceName="The Mediterranean Dish - Shakshuka"
+          ingredients={[
+            "2 tablespoons extra virgin olive oil",
+            "1 medium onion, diced",
+            "1 red bell pepper, diced",
+            "4 garlic cloves, minced",
+            "1 teaspoon ground cumin",
+            "1 teaspoon sweet paprika",
+            "¼ teaspoon cayenne pepper",
+            "1 (28 oz) can crushed tomatoes",
+            "½ teaspoon salt",
+            "¼ teaspoon black pepper",
+            "6 large eggs",
+            "½ cup feta cheese, crumbled",
+            "¼ cup Greek yogurt for serving",
+            "Fresh parsley for garnish"
+          ]}
+          instructions={[
+            "Heat olive oil in a large cast iron skillet or wide pan over medium heat.",
+            "Add onion and bell pepper, cook for 5 minutes until softened.",
+            "Add garlic, cumin, paprika, and cayenne. Cook for 1 minute until fragrant.",
+            "Add crushed tomatoes, salt, and pepper. Simmer for 10-15 minutes until sauce thickens.",
+            "Create 6 wells in the sauce and crack eggs into each well.",
+            "Sprinkle feta around the eggs and cover pan.",
+            "Cook for 10-15 minutes until egg whites are set but yolks are still runny.",
+            "Garnish with parsley and serve with dollops of Greek yogurt."
+          ]}
+          tips={[
+            "Prepare sauce up to 3 days ahead",
+            "Store in refrigerator and reheat before adding eggs",
+            "Serve with whole grain pita for extra carbs"
+          ]}
+        />
+      </section>
+
+      <!-- Air Fryer Recipes -->
+      <section class="page-break-before">
+        <h2 class="text-3xl font-bold text-emerald-700 mb-6 border-b-2 border-emerald-200 pb-2">
+          🔥 Air Fryer Recipes
+        </h2>
+        
+        <RecipeCard
+          id="air-fryer-chicken"
+          title="Crispy Mediterranean Air Fryer Chicken Thighs"
+          protein="27g per serving"
+          prepTime="15 minutes (+ 2 hours marinating)"
+          cookTime="18 minutes"
+          serves="4"
+          referenceLink="https://www.theroastedroot.net/crispy-mediterranean-air-fryer-chicken-thighs/"
+          referenceName="The Roasted Root - Air Fryer Chicken"
+          ingredients={[
+            "8 bone-in, skin-on chicken thighs",
+            "3 tablespoons extra virgin olive oil",
+            "2 lemons (juiced and zested)",
+            "4 garlic cloves, minced",
+            "2 teaspoons ground sumac",
+            "1 teaspoon ground cumin",
+            "1 teaspoon sweet paprika",
+            "½ teaspoon ground cinnamon",
+            "½ teaspoon allspice",
+            "1 teaspoon salt",
+            "½ teaspoon black pepper",
+            "Fresh oregano for garnish"
+          ]}
+          instructions={[
+            "Pat chicken thighs dry and place in a large bowl.",
+            "Whisk together olive oil, lemon juice, lemon zest, garlic, and all spices.",
+            "Pour marinade over chicken, ensuring all pieces are coated.",
+            "Marinate for at least 2 hours or overnight in refrigerator.",
+            "Preheat air fryer to 375°F (190°C).",
+            "Remove chicken from marinade and place in air fryer basket, skin-side down.",
+            "Cook for 12 minutes, then flip and cook for 6-8 more minutes.",
+            "Check internal temperature reaches 165°F (74°C).",
+            "Let rest for 5 minutes before serving, garnish with fresh oregano."
+          ]}
+          tips={[
+            "Stores in refrigerator for 1 week",
+            "Marinate up to 24 hours ahead",
+            "Reheat at 350°F for 3-5 minutes to maintain crispiness"
+          ]}
+        />
+
+        <RecipeCard
+          id="air-fryer-salmon"
+          title="Air Fryer Mediterranean Salmon"
+          protein="34g per serving"
+          prepTime="10 minutes"
+          cookTime="7-10 minutes"
+          serves="4"
+          referenceLink="https://www.themediterraneandish.com/air-fryer-salmon/"
+          referenceName="The Mediterranean Dish - Air Fryer Salmon"
+          ingredients={[
+            "4 salmon fillets (6 oz each), skin removed",
+            "3 tablespoons extra virgin olive oil",
+            "2 lemons (juiced and zested)",
+            "3 garlic cloves, minced",
+            "2 teaspoons dried oregano",
+            "1 teaspoon sweet paprika",
+            "1 teaspoon garlic powder",
+            "¾ teaspoon salt",
+            "½ teaspoon black pepper",
+            "¼ teaspoon red pepper flakes",
+            "Fresh parsley for garnish",
+            "Lemon wedges for serving"
+          ]}
+          instructions={[
+            "Pat salmon fillets dry with paper towels.",
+            "In a small bowl, mix olive oil, lemon juice, lemon zest, and minced garlic.",
+            "In another bowl, combine oregano, paprika, garlic powder, salt, pepper, and red pepper flakes.",
+            "Brush salmon with the oil mixture, then season with spice blend.",
+            "Preheat air fryer to 400°F (200°C).",
+            "Place salmon in air fryer basket, ensuring pieces don't overlap.",
+            "Cook for 7-10 minutes depending on thickness (internal temp should reach 145°F/63°C).",
+            "Let rest for 2 minutes, then garnish with parsley and serve with lemon wedges."
+          ]}
+          tips={[
+            "1-inch thick: 7-8 minutes",
+            "1.5-inch thick: 9-10 minutes",
+            "Use garlic powder instead of fresh to prevent burning"
+          ]}
+        />
+      </section>
+
+      <!-- Instant Pot Recipes -->
+      <section class="page-break-before">
+        <h2 class="text-3xl font-bold text-emerald-700 mb-6 border-b-2 border-emerald-200 pb-2">
+          ⚡ Instant Pot Recipes
+        </h2>
+        
+        <RecipeCard
+          id="instant-pot-lentil-soup"
+          title="Mediterranean Instant Pot Lentil Soup"
+          protein="18g per serving"
+          prepTime="15 minutes"
+          cookTime="25 minutes"
+          serves="6-8"
+          referenceLink="https://www.cookwithmanali.com/instant-pot-mediterranean-lentil-soup/"
+          referenceName="Cook With Manali - Mediterranean Lentil Soup"
+          ingredients={[
+            "2 tablespoons extra virgin olive oil",
+            "1 large onion, diced",
+            "3 garlic cloves, minced",
+            "1 tablespoon fresh ginger, grated",
+            "1 (14.5 oz) can diced tomatoes with juice",
+            "1½ cups red lentils, rinsed",
+            "4 cups vegetable or chicken broth",
+            "2 large carrots, diced",
+            "2 teaspoons ground cumin",
+            "1 teaspoon ground coriander",
+            "1 teaspoon turmeric",
+            "½ teaspoon smoked paprika",
+            "1 teaspoon salt (or to taste)",
+            "½ teaspoon black pepper",
+            "2 cups fresh spinach",
+            "2 tablespoons lemon juice",
+            "Fresh cilantro for garnish"
+          ]}
+          instructions={[
+            "Set Instant Pot to \"Sauté\" mode and heat olive oil.",
+            "Add onions and cook for 3-4 minutes until translucent.",
+            "Add garlic and ginger, cook for 1 minute until fragrant.",
+            "Add diced tomatoes with juice and deglaze the pot, scraping up any browned bits.",
+            "Add rinsed lentils, broth, carrots, cumin, coriander, turmeric, paprika, salt, and pepper.",
+            "Turn Instant Pot to \"off\" and secure the lid with valve in sealing position.",
+            "Pressure cook on high for 25 minutes.",
+            "Allow natural pressure release for 10 minutes, then quick release remaining pressure.",
+            "Stir in spinach and lemon juice until spinach wilts.",
+            "Taste and adjust seasoning. Serve hot garnished with fresh cilantro."
+          ]}
+          tips={[
+            "Refrigerate for up to 5 days",
+            "Freeze for up to 4 months",
+            "Add extra broth when reheating as lentils absorb liquid"
+          ]}
+        />
+
+        <RecipeCard
+          id="instant-pot-beef-stew"
+          title="Mediterranean Instant Pot Beef Stew"
+          protein="25g per serving"
+          prepTime="20 minutes"
+          cookTime="45 minutes"
+          serves="6-8"
+          ingredients={[
+            "3 lbs beef chuck roast, cut into 2-inch cubes",
+            "2 tablespoons extra virgin olive oil",
+            "1 large onion, diced",
+            "4 garlic cloves, minced",
+            "2 tablespoons tomato paste",
+            "1 cup red wine (optional, or use more broth)",
+            "2 cups beef broth",
+            "1 (14.5 oz) can diced tomatoes",
+            "3 large carrots, cut into chunks",
+            "1 lb small potatoes, halved",
+            "2 teaspoons dried oregano",
+            "1 teaspoon dried rosemary",
+            "2 bay leaves",
+            "1 teaspoon salt",
+            "½ teaspoon black pepper",
+            "¼ cup kalamata olives",
+            "Fresh parsley for garnish"
+          ]}
+          instructions={[
+            "Season beef cubes with salt and pepper.",
+            "Set Instant Pot to \"Sauté\" and heat olive oil.",
+            "Brown beef in batches, about 3-4 minutes per side. Remove and set aside.",
+            "Add onion to pot and sauté for 3-4 minutes until softened.",
+            "Add garlic and tomato paste, cook for 1 minute.",
+            "Add wine (if using) and scrape up any browned bits.",
+            "Return beef to pot with broth, diced tomatoes, oregano, rosemary, and bay leaves.",
+            "Secure lid and pressure cook on high for 35 minutes.",
+            "Quick release pressure, then add carrots and potatoes.",
+            "Pressure cook for another 5 minutes, then quick release.",
+            "Stir in olives and let rest for 5 minutes.",
+            "Remove bay leaves and garnish with fresh parsley before serving."
+          ]}
+          tips={[
+            "Serve over quinoa, rice, or polenta",
+            "Freezes well for up to 4 months",
+            "Add fresh lemon juice just before serving for brightness"
+          ]}
+        />
+      </section>
+    </div>
+
+    <!-- Print note -->
+    <div class="mt-12 text-center text-slate-600 font-sans">
+      <p class="text-sm">🖨️ These recipes are optimized for printing - each recipe will print cleanly on separate pages!</p>
+    </div>
+  </main>
+</Layout>
