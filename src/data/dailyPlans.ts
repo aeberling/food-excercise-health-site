@@ -44,11 +44,11 @@ export const weeklyPlans: DayPlan[] = [
       protein: "34g"
     },
     exercise: {
-      name: "Lower Body Strength Training",
+      name: "Strength Training",
       duration: "60 minutes",
       intensity: "High",
-      description: "Leg press, hamstring curls, quad extensions, calf raises, hip abduction, glute bridges",
-      workoutId: "monday-lower-body"
+      description: "Full body strength training - legs, chest, back, shoulders, arms, core",
+      workoutId: "monday-strength"
     },
     totalProtein: "99g + snacks",
     tips: [
@@ -75,11 +75,11 @@ export const weeklyPlans: DayPlan[] = [
       recipeId: "instant-pot-beef-stew"
     },
     exercise: {
-      name: "Taekwondo + Interval Running",
-      duration: "75 minutes",
-      intensity: "Moderate-High",
-      description: "45 min taekwondo (kicks, forms, conditioning) + 30 min interval run",
-      workoutId: "tuesday-taekwondo-running"
+      name: "Taekwondo + Strength Training",
+      duration: "90 minutes",
+      intensity: "High",
+      description: "45 min taekwondo (kicks, forms, technique) + 45 min upper body strength",
+      workoutId: "tuesday-taekwondo-strength"
     },
     totalProtein: "101g + snacks",
     tips: [
@@ -105,11 +105,11 @@ export const weeklyPlans: DayPlan[] = [
       protein: "28g"
     },
     exercise: {
-      name: "Badminton + Core Work",
-      duration: "4+ hours",
+      name: "Badminton",
+      duration: "4 hours",
       intensity: "Moderate-High",
-      description: "Regular badminton session + 20 minutes core strengthening",
-      workoutId: "wednesday-badminton-core"
+      description: "Regular badminton session - focus on game play and footwork",
+      workoutId: "wednesday-badminton"
     },
     totalProtein: "81g + snacks",
     tips: [
@@ -135,11 +135,11 @@ export const weeklyPlans: DayPlan[] = [
       recipeId: "air-fryer-souvlaki"
     },
     exercise: {
-      name: "Upper Body Strength + Taekwondo Flexibility",
-      duration: "75 minutes",
+      name: "Taekwondo + Strength Training",
+      duration: "90 minutes",
       intensity: "High",
-      description: "45 min upper body weights + 30 min taekwondo flexibility flow",
-      workoutId: "thursday-upper-body-taekwondo"
+      description: "45 min taekwondo (advanced techniques) + 45 min lower body strength",
+      workoutId: "thursday-taekwondo-strength"
     },
     totalProtein: "85g + snacks",
     tips: [
@@ -222,11 +222,11 @@ export const weeklyPlans: DayPlan[] = [
       protein: "30g"
     },
     exercise: {
-      name: "Badminton + Upper Body Weights",
-      duration: "4+ hours",
+      name: "Badminton",
+      duration: "4 hours",
       intensity: "Moderate-High",
-      description: "Regular badminton session + 45 min upper body strength",
-      workoutId: "sunday-badminton-upper-body"
+      description: "Regular badminton session - focus on competitive play",
+      workoutId: "sunday-badminton"
     },
     totalProtein: "85g + snacks",
     tips: [
@@ -256,7 +256,7 @@ export const week2Plans: DayPlan[] = [
       recipeId: "instant-pot-lentil-soup"
     },
     exercise: {
-      name: "Lower Body Strength Training",
+      name: "Strength Training",
       duration: "60 minutes",
       intensity: "High",
       description: "Progressive overload week - increase weights from Week 1"

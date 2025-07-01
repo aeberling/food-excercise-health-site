@@ -129,10 +129,30 @@ const todaysQuote = getTodaysQuote();
           </div>
         </div>
         
+        <!-- Weight Tracking Section -->
+        <div class="bg-gradient-to-br from-teal-400 to-cyan-400 rounded-2xl p-4 shadow-lg transform hover:scale-105 transition-all duration-300">
+          <h3 class="font-black text-white text-lg mb-3">⚖️ Weight Tracking</h3>
+          <div class="flex items-center gap-2">
+            <input 
+              type="number" 
+              id="weight-input" 
+              step="0.1" 
+              min="0" 
+              max="999.9"
+              placeholder="0.0"
+              class="w-24 p-2 bg-white bg-opacity-90 border-2 border-white rounded-xl text-gray-800 font-bold text-center placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50 transition-all text-lg"
+            />
+            <span class="text-white font-bold">lbs</span>
+          </div>
+          <div class="mt-2 bg-white bg-opacity-20 rounded-lg px-2 py-1 text-white text-xs font-bold">
+            Track daily for best results
+          </div>
+        </div>
+        
         <!-- Notes Section -->
-        <div class="bg-gradient-to-br from-pink-400 to-rose-400 rounded-2xl p-4 shadow-lg transform hover:scale-105 transition-all duration-300 md:col-span-2 lg:col-span-2">
+        <div class="bg-gradient-to-br from-pink-400 to-rose-400 rounded-2xl p-4 shadow-lg transform hover:scale-105 transition-all duration-300">
           <h3 class="font-black text-white text-lg mb-3">📝 Daily Reflection</h3>
-          <textarea id="daily-notes" class="w-full p-3 bg-white bg-opacity-90 border-2 border-white rounded-xl text-gray-800 font-medium placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50 transition-all text-sm" rows="2" placeholder="How was your day? What made you smile? 😊"></textarea>
+          <textarea id="daily-notes" class="w-full p-3 bg-white bg-opacity-90 border-2 border-white rounded-xl text-gray-800 font-medium placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-50 transition-all text-sm" rows="3" placeholder="How was your day? What made you smile? 😊"></textarea>
         </div>
       </div>
       
@@ -665,6 +685,13 @@ const todaysQuote = getTodaysQuote();
       const notesField = document.getElementById('daily-notes');
       if (notesField) {
         notesField.addEventListener('blur', autoSaveLocally);
+      }
+      
+      // Add event listener for weight input
+      const weightInput = document.getElementById('weight-input');
+      if (weightInput) {
+        weightInput.addEventListener('blur', autoSaveLocally);
+        weightInput.addEventListener('change', autoSaveLocally);
       }
     });
     

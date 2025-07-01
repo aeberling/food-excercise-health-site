@@ -7,6 +7,7 @@ export interface TrackingData {
   exercise: boolean;
   waterGlasses: number;
   alcoholFree?: boolean;
+  weight?: number;
   notes?: string;
 }
 

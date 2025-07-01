@@ -208,6 +208,9 @@ export async function saveCurrentTrackingState(tracker: SimpleUnifiedTracker, da
   
   const waterDisplay = document.getElementById('water-count');
   const waterGlasses = parseInt(waterDisplay?.textContent || '0');
+  
+  const weightInput = (document.querySelector('#weight-input') as HTMLInputElement)?.value;
+  const weight = weightInput ? parseFloat(weightInput) : undefined;
 
   const trackingData: TrackingData = {
     date: dateString,
@@ -217,6 +220,7 @@ export async function saveCurrentTrackingState(tracker: SimpleUnifiedTracker, da
     exercise,
     waterGlasses,
     alcoholFree,
+    weight,
     notes: notes || `Mediterranean Diet Day - Week ${Math.ceil((date.getDay() + 1) / 7)}`
   };
 
@@ -235,6 +239,7 @@ export async function loadCurrentTrackingState(tracker: SimpleUnifiedTracker, da
   const alcoholFreeCheck = document.querySelector('#alcohol-free-check') as HTMLInputElement;
   const notesField = document.querySelector('#daily-notes') as HTMLTextAreaElement;
   const waterDisplay = document.getElementById('water-count');
+  const weightInput = document.querySelector('#weight-input') as HTMLInputElement;
   
   if (data) {
     // Load existing data
@@ -245,6 +250,7 @@ export async function loadCurrentTrackingState(tracker: SimpleUnifiedTracker, da
     if (alcoholFreeCheck) alcoholFreeCheck.checked = data.alcoholFree || false;
     if (notesField) notesField.value = data.notes || '';
     if (waterDisplay) waterDisplay.textContent = data.waterGlasses.toString();
+    if (weightInput) weightInput.value = data.weight ? data.weight.toString() : '';
   } else {
     // Clear all fields when no data exists for this date
     if (breakfastCheck) breakfastCheck.checked = false;
@@ -254,5 +260,6 @@ export async function loadCurrentTrackingState(tracker: SimpleUnifiedTracker, da
     if (alcoholFreeCheck) alcoholFreeCheck.checked = false;
     if (notesField) notesField.value = '';
     if (waterDisplay) waterDisplay.textContent = '0';
+    if (weightInput) weightInput.value = '';
   }
 }

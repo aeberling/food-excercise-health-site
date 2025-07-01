@@ -7,6 +7,7 @@ export interface TrackingData {
   exercise: boolean;
   waterGlasses: number;
   alcoholFree?: boolean;
+  weight?: number;
   notes?: string;
 }
 
@@ -62,7 +63,7 @@ export class LocalTracker {
     const data = this.getAllData();
     const entries = Object.values(data).sort((a, b) => a.date.localeCompare(b.date));
     
-    const headers = ['Date', 'Breakfast', 'Lunch', 'Dinner', 'Exercise', 'Water Glasses', 'Alcohol Free', 'Notes'];
+    const headers = ['Date', 'Breakfast', 'Lunch', 'Dinner', 'Exercise', 'Water Glasses', 'Alcohol Free', 'Weight', 'Notes'];
     const rows = entries.map(entry => [
       entry.date,
       entry.breakfast ? 'TRUE' : 'FALSE',
@@ -71,6 +72,7 @@ export class LocalTracker {
       entry.exercise ? 'TRUE' : 'FALSE',
       entry.waterGlasses.toString(),
       entry.alcoholFree ? 'TRUE' : 'FALSE',
+      entry.weight ? entry.weight.toString() : '',
       entry.notes || ''
     ]);
 

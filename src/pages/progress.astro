@@ -50,6 +50,34 @@ import Navigation from '../components/Navigation.astro';
       </div>
     </section>
     
+    <!-- Weight Progress Chart -->
+    <section class="bg-white rounded-xl shadow-md p-6 mb-8">
+      <h2 class="text-2xl font-bold text-teal-700 mb-6 flex items-center justify-between">
+        <span>⚖️ Weight Progress</span>
+      </h2>
+      
+      <!-- Weight Chart Container -->
+      <div class="relative" style="height: 300px;">
+        <canvas id="weightChart"></canvas>
+      </div>
+      
+      <!-- Weight Stats -->
+      <div class="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-200">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-teal-600" id="current-weight">--</div>
+          <div class="text-sm text-gray-600">Current Weight</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-teal-600" id="weight-change">--</div>
+          <div class="text-sm text-gray-600">Total Change</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-teal-600" id="weight-entries">0</div>
+          <div class="text-sm text-gray-600">Entries</div>
+        </div>
+      </div>
+    </section>
+    
     <!-- Recent Activity -->
     <section class="bg-white rounded-xl shadow-md p-6 mb-8">
       <h2 class="text-2xl font-bold text-emerald-700 mb-6">Recent Activity</h2>
@@ -147,6 +175,9 @@ import Navigation from '../components/Navigation.astro';
       // Generate progress chart
       generateProgressChart(allData);
       
+      // Generate weight chart
+      generateWeightChart(allData);
+      
       // Load recent activity
       loadRecentActivity(allData);
     }
@@ -176,7 +207,21 @@ import Navigation from '../components/Navigation.astro';
       // Prepare data for Chart.js
       const labels = sortedEntries.map(entry => {
         const date = new Date(entry.date);
-        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const dateLabel = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        
+        // Check if all metrics are at 100% for this day
+        const mealsCompleted = (entry.breakfast ? 1 : 0) + (entry.lunch ? 1 : 0) + (entry.dinner ? 1 : 0);
+        const mealsPercent = (mealsCompleted / 3) * 100;
+        const exercisePercent = entry.exercise ? 100 : 0;
+        const waterPercent = Math.min((entry.waterGlasses / 8) * 100, 100);
+        const alcoholFreePercent = entry.alcoholFree ? 100 : 0;
+        
+        const isPerfectDay = mealsPercent === 100 && 
+                           exercisePercent === 100 && 
+                           waterPercent === 100 && 
+                           alcoholFreePercent === 100;
+        
+        return isPerfectDay ? `⭐ ${dateLabel}` : dateLabel;
       });
       
       const datasets = [
@@ -290,6 +335,117 @@ import Navigation from '../components/Navigation.astro';
                 stepSize: 25,
                 callback: function(value) {
                   return value + '%';
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    let weightChart = null;
+    
+    function generateWeightChart(allData) {
+      let canvas = document.getElementById('weightChart');
+      if (!canvas) {
+        console.error('Weight chart canvas element not found');
+        return;
+      }
+      
+      // Filter entries with weight data and sort by date
+      const weightEntries = Object.values(allData)
+        .filter(entry => entry.weight && entry.weight > 0)
+        .sort((a, b) => a.date.localeCompare(b.date));
+      
+      if (weightEntries.length === 0) {
+        const container = canvas.parentElement;
+        if (container) {
+          container.innerHTML = '<p class="text-center text-gray-500 py-8">No weight data yet. Start tracking your weight to see progress!</p>';
+        }
+        // Update stats
+        document.getElementById('current-weight').textContent = '--';
+        document.getElementById('weight-change').textContent = '--';
+        document.getElementById('weight-entries').textContent = '0';
+        return;
+      }
+      
+      // Calculate stats
+      const currentWeight = weightEntries[weightEntries.length - 1].weight;
+      const startWeight = weightEntries[0].weight;
+      const weightChange = currentWeight - startWeight;
+      
+      document.getElementById('current-weight').textContent = currentWeight.toFixed(1) + ' lbs';
+      document.getElementById('weight-change').textContent = (weightChange >= 0 ? '+' : '') + weightChange.toFixed(1) + ' lbs';
+      document.getElementById('weight-entries').textContent = weightEntries.length.toString();
+      
+      // Prepare chart data
+      const labels = weightEntries.map(entry => {
+        const date = new Date(entry.date);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      });
+      
+      // Destroy existing chart if it exists
+      if (weightChart) {
+        weightChart.destroy();
+      }
+      
+      // Create new chart
+      const ctx = canvas.getContext('2d');
+      weightChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Weight (lbs)',
+            data: weightEntries.map(entry => entry.weight),
+            borderColor: 'rgb(20, 184, 166)',
+            backgroundColor: 'rgba(20, 184, 166, 0.1)',
+            tension: 0.1,
+            borderWidth: 3,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false,
+          },
+          plugins: {
+            title: {
+              display: false
+            },
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.parsed.y.toFixed(1) + ' lbs';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              display: true,
+              title: {
+                display: true,
+                text: 'Date'
+              }
+            },
+            y: {
+              display: true,
+              title: {
+                display: true,
+                text: 'Weight (lbs)'
+              },
+              ticks: {
+                callback: function(value) {
+                  return value.toFixed(1);
                 }
               }
             }
