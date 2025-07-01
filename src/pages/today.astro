@@ -522,6 +522,7 @@ const todaysQuote = getTodaysQuote();
     let timerInterval;
     let seconds = 0;
     let isRunning = false;
+    let notesDebounceTimer;
 
     function toggleTimer() {
       const timer = document.getElementById('workout-timer');
@@ -685,6 +686,11 @@ const todaysQuote = getTodaysQuote();
       const notesField = document.getElementById('daily-notes');
       if (notesField) {
         notesField.addEventListener('blur', autoSaveLocally);
+        notesField.addEventListener('input', () => {
+          // Debounce autosave for input events
+          clearTimeout(notesDebounceTimer);
+          notesDebounceTimer = setTimeout(autoSaveLocally, 1000);
+        });
       }
       
       // Add event listener for weight input

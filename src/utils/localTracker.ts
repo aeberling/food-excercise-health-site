@@ -152,7 +152,7 @@ export function saveCurrentTrackingState(): boolean {
     waterGlasses,
     alcoholFree,
     weight,
-    notes: notes || `Mediterranean Diet Day - Week ${Math.floor(Date.now() / (1000 * 60 * 60 * 24 * 7)) % 2 + 1}`
+    notes: notes || ''
   };
 
   return tracker.saveTrackingData(trackingData);

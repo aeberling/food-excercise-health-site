@@ -283,7 +283,8 @@ export async function saveCurrentTrackingState(tracker: SimpleUnifiedTracker, da
   const dinner = (document.querySelector('#dinner-check') as HTMLInputElement)?.checked || false;
   const exercise = (document.querySelector('#exercise-check') as HTMLInputElement)?.checked || false;
   const alcoholFree = (document.querySelector('#alcohol-free-check') as HTMLInputElement)?.checked || false;
-  const notes = (document.querySelector('#daily-notes') as HTMLTextAreaElement)?.value || '';
+  const notesElement = document.querySelector('#daily-notes') as HTMLTextAreaElement;
+  const notes = notesElement ? notesElement.value : '';
   
   const waterDisplay = document.getElementById('water-count');
   const waterGlasses = parseInt(waterDisplay?.textContent || '0');
@@ -300,7 +301,7 @@ export async function saveCurrentTrackingState(tracker: SimpleUnifiedTracker, da
     waterGlasses,
     alcoholFree,
     weight,
-    notes: notes || `Mediterranean Diet Day - Week ${Math.ceil((date.getDay() + 1) / 7)}`
+    notes: notes
   };
 
   return await tracker.saveTrackingData(trackingData);
